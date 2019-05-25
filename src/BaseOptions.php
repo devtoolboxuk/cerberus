@@ -7,7 +7,7 @@ class BaseOptions
 
     public function getOptions()
     {
-        if ($this->yaml_loaded()) {
+        if ($this->isYamlLoaded()) {
             return yaml_parse_file(__DIR__ . '/Options.yml');
         }
 
@@ -76,7 +76,7 @@ class BaseOptions
 
     }
 
-    private function yaml_loaded()
+    private function isYamlLoaded()
     {
         return extension_loaded('yaml');
     }
