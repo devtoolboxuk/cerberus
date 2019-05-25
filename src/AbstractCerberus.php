@@ -7,18 +7,21 @@ use devtoolboxuk\soteria\SoteriaService;
 abstract class AbstractCerberus
 {
 
-
     protected $options = [];
     protected $results = [];
     protected $result = [];
     protected $score = 0;
-
     protected $soteria;
 
     function __construct()
     {
         $this->soteria = new SoteriaService();
         $this->setOptions();
+    }
+
+    public function yaml_loaded()
+    {
+        return extension_loaded('yaml');
     }
 
     protected function processWrappers($handler)
@@ -33,11 +36,18 @@ abstract class AbstractCerberus
         }
     }
 
-    protected function clearResults()
+    private function getOption($name)
     {
-        $this->results = [];
-        $this->result = [];
-        $this->score = 0;
+        if (!$this->hasOption($name)) {
+            return null;
+        }
+
+        return $this->options[$name];
+    }
+
+    private function hasOption($name)
+    {
+        return isset($this->options[$name]);
     }
 
     protected function addResult($score, $result)
@@ -59,6 +69,12 @@ abstract class AbstractCerberus
         return $this;
     }
 
+    protected function clearResults()
+    {
+        $this->results = [];
+        $this->result = [];
+        $this->score = 0;
+    }
 
     /**
      * @return array
@@ -74,8 +90,10 @@ abstract class AbstractCerberus
      */
     public function setOptions($options = [])
     {
-        $basic_options = yaml_parse_file(__DIR__ . '/Options.yml');
-
+        $basic_options = [];
+        if ($this->yaml_loaded()) {
+            $basic_options = yaml_parse_file(__DIR__ . '/Options.yml');
+        }
         if (is_array($options)) {
             $options = $this->arrayMergeRecursiveDistinct($basic_options, $options);
         } else {
@@ -106,19 +124,5 @@ abstract class AbstractCerberus
             }
         }
         return $merged;
-    }
-
-    private function getOption($name)
-    {
-        if (!$this->hasOption($name)) {
-            return null;
-        }
-
-        return $this->options[$name];
-    }
-
-    private function hasOption($name)
-    {
-        return isset($this->options[$name]);
     }
 }

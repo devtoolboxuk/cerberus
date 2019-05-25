@@ -19,6 +19,7 @@
   ],
   "require": {
     "php": ">=5.4.16",
+    "ext-yaml": "*",
     "devtoolboxuk/soteria": "^2.1.0",
     "mattketmo/email-checker": "~v1.5.5"
   },
