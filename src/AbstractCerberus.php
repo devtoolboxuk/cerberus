@@ -20,6 +20,61 @@ abstract class AbstractCerberus
     }
 
     /**
+     * @param array $options
+     */
+    public function setOptions($options = [])
+    {
+        $baseOptions = new BaseOptions();
+        $this->options = $this->arrayMergeRecursiveDistinct($baseOptions->getOptions(), $options);
+    }
+
+    /**
+     * @param $file
+     */
+    public function setOptionsWithFile($file)
+    {
+        if ($this->isYamlLoaded()) {
+            $this->soteria->sanitise()->disinfect($file, 'url');
+            if ($this->soteria->sanitise()->result()->isValid()) {
+                $this->options = $this->arrayMergeRecursiveDistinct($this->options, yaml_parse_file($file));
+            } else {
+                if (file_exists($file)) {
+                    $this->options = $this->arrayMergeRecursiveDistinct($this->options, yaml_parse_file($file));
+                }
+            }
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    private function isYamlLoaded()
+    {
+        return extension_loaded('yaml');
+    }
+
+    /**
+     * @param array $merged
+     * @param array $array2
+     * @return array
+     */
+    private function arrayMergeRecursiveDistinct($merged = [], $array2 = [])
+    {
+        if (empty($array2)) {
+            return $merged;
+        }
+
+        foreach ($array2 as $key => &$value) {
+            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
+                $merged[$key] = $this->arrayMergeRecursiveDistinct($merged[$key], $value);
+            } else {
+                $merged[$key] = $value;
+            }
+        }
+        return $merged;
+    }
+
+    /**
      * @param $handler
      */
     protected function processWrappers($handler)
@@ -80,7 +135,6 @@ abstract class AbstractCerberus
         return $this;
     }
 
-
     protected function clearResults()
     {
         $this->results = [];
@@ -96,59 +150,5 @@ abstract class AbstractCerberus
         return $this->options;
     }
 
-    /**
-     * @return bool
-     */
-    private function isYamlLoaded()
-    {
-        return extension_loaded('yaml');
-    }
 
-    /**
-     * @param File|array $options
-     */
-    public function setOptions($options)
-    {
-
-        $baseOptions = new BaseOptions();
-        $basic_options = $baseOptions->getOptions();
-
-        if (is_array($options)) {
-            $options = $this->arrayMergeRecursiveDistinct($basic_options, $options);
-        } else {
-            if ($this->isYamlLoaded()) {
-                $this->soteria->sanitise()->disinfect($options, 'url');
-                if ($this->soteria->sanitise()->result()->isValid()) {
-                    $options = $this->arrayMergeRecursiveDistinct($basic_options, yaml_parse_file($options));
-                } else {
-                    if (file_exists($options)) {
-                        $options = $this->arrayMergeRecursiveDistinct($basic_options, yaml_parse_file($options));
-                    }
-                }
-            }
-        }
-
-        $this->options = $options;
-    }
-
-    /**
-     * @param array $merged
-     * @param array $array2
-     * @return array
-     */
-    private function arrayMergeRecursiveDistinct($merged = [], $array2 = [])
-    {
-        if (empty($array2)) {
-            return $merged;
-        }
-
-        foreach ($array2 as $key => &$value) {
-            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = $this->arrayMergeRecursiveDistinct($merged[$key], $value);
-            } else {
-                $merged[$key] = $value;
-            }
-        }
-        return $merged;
-    }
 }
