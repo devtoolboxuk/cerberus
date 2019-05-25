@@ -31,18 +31,19 @@ class CountryWrapper extends Wrapper
         $sanitise = $this->soteria->sanitise(true);
 
         $params = $this->getParams();
+        if (!empty($params)) {
+            foreach ($params as $param) {
+                if ($param != '') {
+                    $data = explode(":", $param);
+                    if (strpos(strtolower($this->sanitizeReference()), strtolower($data[0])) !== false) {
 
-        foreach ($params as $param) {
-            if ($param != '') {
-                $data = explode(":", $param);
-                if (strpos(strtolower($this->sanitizeReference()), strtolower($data[0])) !== false) {
-
-                    if (isset($data[1])) {
-                        $sanitise->disinfect($data[1], 'int');
-                    }
-                    $this->score = isset($data[1]) ? (int)$sanitise->result()->getOutput() : $this->getRealScore();
-                    if ($this->score > 0) {
-                        $this->detected++;
+                        if (isset($data[1])) {
+                            $sanitise->disinfect($data[1], 'int');
+                        }
+                        $this->score = isset($data[1]) ? (int)$sanitise->result()->getOutput() : $this->getRealScore();
+                        if ($this->score > 0) {
+                            $this->detected++;
+                        }
                     }
                 }
             }

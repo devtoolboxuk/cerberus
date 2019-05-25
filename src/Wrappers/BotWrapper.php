@@ -33,7 +33,7 @@ class BotWrapper extends Wrapper
         }
 
         $params = $this->getParams();
-        if ($params) {
+        if (!empty($params)) {
             foreach ($params as $param) {
                 if (strpos(strtolower($this->getReference()), $param) !== false) {
                     $this->userAgentFound++;

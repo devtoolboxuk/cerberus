@@ -36,7 +36,7 @@ abstract class Wrapper
         return isset($this->realScore);
     }
 
-    function setOptions($reference, $options = [])
+    public function setOptions($reference, $options = [])
     {
         $this->reference = $reference;
         $this->options = $options;
