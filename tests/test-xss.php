@@ -34,10 +34,6 @@ class XssTest extends TestCase
 
         $this->assertEquals(0, $detection->getScore());
         $this->assertEquals('[]', $detection->getResult());
-        $this->assertIsArray($detection->toArray());
-        $this->assertArrayHasKey('results', $detection->toArray());
-        $this->assertArrayHasKey('references', $detection->toArray());
-        $this->assertArrayHasKey('score', $detection->toArray());
 
     }
 
