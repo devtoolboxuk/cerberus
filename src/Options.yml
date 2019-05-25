@@ -40,10 +40,6 @@ Detection:
       active: 1
       score: 10
       params: ''
-    Security:
-      active: 1
-      score: 10
-      params: ''
     Xss:
       active: 1
       score: 10

@@ -19,10 +19,6 @@ abstract class AbstractCerberus
         $this->setOptions();
     }
 
-    public function yaml_loaded()
-    {
-        return extension_loaded('yaml');
-    }
 
     protected function processWrappers($handler)
     {
@@ -90,23 +86,25 @@ abstract class AbstractCerberus
      */
     public function setOptions($options = [])
     {
-        $basic_options = [];
-        if ($this->yaml_loaded()) {
-            $basic_options = yaml_parse_file(__DIR__ . '/Options.yml');
-        }
+
+        $baseOptions = new BaseOptions();
+        $basic_options = $baseOptions->getOptions();
+
         if (is_array($options)) {
             $options = $this->arrayMergeRecursiveDistinct($basic_options, $options);
         } else {
-
-            $this->soteria->sanitise()->disinfect($options, 'url');
-            if ($this->soteria->sanitise()->result()->isValid()) {
-                $options = $this->arrayMergeRecursiveDistinct($basic_options, yaml_parse_file($options));
-            } else {
-                if (file_exists($options)) {
+            if ($this->yaml_loaded()) {
+                $this->soteria->sanitise()->disinfect($options, 'url');
+                if ($this->soteria->sanitise()->result()->isValid()) {
                     $options = $this->arrayMergeRecursiveDistinct($basic_options, yaml_parse_file($options));
+                } else {
+                    if (file_exists($options)) {
+                        $options = $this->arrayMergeRecursiveDistinct($basic_options, yaml_parse_file($options));
+                    }
                 }
             }
         }
+
         $this->options = $options;
     }
 
