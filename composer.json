@@ -1,0 +1,32 @@
+{
+  "name": "devtoolboxuk/cerberus",
+  "description": "Another Security Package for PHP",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "devtoolboxuk\\cerberus\\": "src/"
+    },
+    "classmap": [
+      "src"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Rob Wilson",
+      "email": "rob@dev-toolbox.co.uk"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.16",
+    "devtoolboxuk/soteria": "^2.1.0",
+    "mattketmo/email-checker": "~v1.5.5"
+  },
+  "minimum-stability": "dev",
+  "scripts": {
+    "test": "./vendor/bin/phpunit"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  }
+}
