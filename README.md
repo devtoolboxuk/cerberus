@@ -21,6 +21,8 @@
 
 ## Background
 
+Detects if various threats are placed against the system. A score is then given to each threat. You can then decide what you want to action based on that score
+
 ## Usage
 
 ```sh
@@ -36,9 +38,13 @@ require 'vendor/autoload.php';
 ```php
 use devtoolboxuk\cerberus;
 
-$this->cerberys = new Cerberus();
+$this->cerberus = new Cerberus();
 ```
 
+#### Set Options
+```php
+$cerberus->setOptions($this->getOptions());
+```
 
 ## Maintainers
 

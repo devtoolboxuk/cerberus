@@ -11,7 +11,6 @@ class CountryWrapper extends Wrapper
     public function process()
     {
         $this->initWrapper($this->setLocalName());
-
         $this->detect();
 
         if ($this->detected > 0) {
@@ -28,20 +27,27 @@ class CountryWrapper extends Wrapper
 
     private function detect()
     {
+
+        $sanitise = $this->soteria->sanitise(true);
+
         $params = $this->getParams();
-        if (is_array($params)) {
-            foreach ($params as $param) {
-                if ($param != '') {
-                    $zip = explode(":", $param);
-                    if (strpos(strtolower($this->sanitizeReference()), strtolower($zip[0])) !== false) {
-                        $this->score = isset($zip[1]) ? (int)filter_var($zip[1], FILTER_SANITIZE_NUMBER_INT) : $this->getRealScore();
-                        if ($this->score > 0) {
-                            $this->detected++;
-                        }
+
+        foreach ($params as $param) {
+            if ($param != '') {
+                $data = explode(":", $param);
+                if (strpos(strtolower($this->sanitizeReference()), strtolower($data[0])) !== false) {
+
+                    if (isset($data[1])) {
+                        $sanitise->disinfect($data[1], 'int');
+                    }
+                    $this->score = isset($data[1]) ? (int)$sanitise->result()->getOutput() : $this->getRealScore();
+                    if ($this->score > 0) {
+                        $this->detected++;
                     }
                 }
             }
         }
+
     }
 
 }
