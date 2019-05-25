@@ -38,7 +38,7 @@ class CountryWrapper extends Wrapper
             if ($param != '') {
                 $data = explode(":", $param);
                 if (strpos(strtolower($this->sanitizeReference()), strtolower($data[0])) !== false) {
-                    $this->setRealScore($data[1]);
+                    $this->setRealScore($data);
                 }
             }
         }
