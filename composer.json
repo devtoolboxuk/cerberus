@@ -27,7 +27,6 @@
     "test": "./vendor/bin/phpunit"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
-    "phpmd/phpmd": "*"
+    "phpunit/phpunit": "*"
   }
 }

@@ -11,10 +11,6 @@ build:
           - php-scrutinizer-run
           - command: phpcs-run
             use_website_config: true
-          - command: vendor/bin/phpmd --reportfile /tmp/phpmd.xml
-            analysis:
-              file: /tmp/phpmd.xml
-              format: general-checkstyle
     php54:
       environment:
         php: 5.4
