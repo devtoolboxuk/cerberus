@@ -5,7 +5,7 @@ namespace devtoolboxuk\cerberus;
 class BaseOptions
 {
 
-    function getOptions()
+    public function getOptions()
     {
         if ($this->yaml_loaded()) {
             return yaml_parse_file(__DIR__ . '/Options.yml');
