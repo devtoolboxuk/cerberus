@@ -105,9 +105,9 @@ abstract class AbstractCerberus
     }
 
     /**
-     * @param null $options
+     * @param File|array $options
      */
-    public function setOptions($options = null)
+    public function setOptions($options)
     {
 
         $baseOptions = new BaseOptions();
