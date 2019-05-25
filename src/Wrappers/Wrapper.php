@@ -7,6 +7,7 @@ use devtoolboxuk\soteria\SoteriaService;
 abstract class Wrapper
 {
 
+    protected $soteria;
     private $options = [];
     private $results = null;
     private $score = 0;
@@ -16,21 +17,9 @@ abstract class Wrapper
     private $active;
     private $reference;
 
-    protected $soteria;
-
-    function __construct()
+    public function __construct()
     {
         $this->soteria = new SoteriaService();
-    }
-
-    function pushResult($result)
-    {
-        array_unshift($this->results, $result);
-    }
-
-    function getResult()
-    {
-        return $this->results;
     }
 
     public function getRealScore()
@@ -51,23 +40,6 @@ abstract class Wrapper
     {
         $this->reference = $reference;
         $this->options = $options;
-        return $this;
-    }
-
-    function sanitizeReference()
-    {
-        return str_replace(" ", "", strip_tags(trim($this->getReference())));
-    }
-
-
-    function getReference()
-    {
-        return $this->reference;
-    }
-
-    protected function setReference($reference)
-    {
-        $this->reference = $reference;
         return $this;
     }
 
@@ -104,13 +76,45 @@ abstract class Wrapper
         return isset($this->options[$this->name][$name]);
     }
 
+    public function getResult()
+    {
+        return $this->results;
+    }
+
+    protected function pushResult($result)
+    {
+        array_unshift($this->results, $result);
+    }
+
+    protected function sanitizeReference()
+    {
+        return str_replace(" ", "", strip_tags(trim($this->getReference())));
+    }
+
+    protected function getReference()
+    {
+        return $this->reference;
+    }
+
+    protected function setReference($reference)
+    {
+        $this->reference = $reference;
+        return $this;
+    }
+
     protected function initWrapper($name)
     {
         $this->setName($name);
         $this->setRules();
     }
 
-    function setRules()
+    protected function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    private function setRules()
     {
         $this->options = $this->getOption($this->getName());
 
@@ -133,15 +137,9 @@ abstract class Wrapper
         return isset($this->options[$name]);
     }
 
-    function getName()
+    private function getName()
     {
         return $this->name;
-    }
-
-    protected function setName($name)
-    {
-        $this->name = $name;
-        return $this;
     }
 
     private function setRealScore($score)

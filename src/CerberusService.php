@@ -11,10 +11,11 @@ class CerberusService extends AbstractCerberus implements CerberusInterface
     protected $handlers = [];
     protected $references = [];
 
-    function __construct()
+    public function __construct()
     {
         $this->resetHandlers();
     }
+
 
     public function resetHandlers()
     {

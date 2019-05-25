@@ -13,13 +13,15 @@ abstract class AbstractCerberus
     protected $score = 0;
     protected $soteria;
 
-    function __construct()
+    public function __construct()
     {
         $this->soteria = new SoteriaService();
         $this->setOptions();
     }
 
-
+    /**
+     * @param $handler
+     */
     protected function processWrappers($handler)
     {
         $options = $this->getOption('Detection');
@@ -32,6 +34,10 @@ abstract class AbstractCerberus
         }
     }
 
+    /**
+     * @param $name
+     * @return mixed|null
+     */
     private function getOption($name)
     {
         if (!$this->hasOption($name)) {
@@ -41,11 +47,20 @@ abstract class AbstractCerberus
         return $this->options[$name];
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     private function hasOption($name)
     {
         return isset($this->options[$name]);
     }
 
+    /**
+     * @param $score
+     * @param $result
+     * @return $this
+     */
     protected function addResult($score, $result)
     {
         if (is_array($result)) {
@@ -65,6 +80,7 @@ abstract class AbstractCerberus
         return $this;
     }
 
+
     protected function clearResults()
     {
         $this->results = [];
@@ -81,10 +97,17 @@ abstract class AbstractCerberus
     }
 
     /**
-     * @param file|array $options
-     * @return $this
+     * @return bool
      */
-    public function setOptions($options = [])
+    private function isYamlLoaded()
+    {
+        return extension_loaded('yaml');
+    }
+
+    /**
+     * @param null $options
+     */
+    public function setOptions($options = null)
     {
 
         $baseOptions = new BaseOptions();
@@ -93,7 +116,7 @@ abstract class AbstractCerberus
         if (is_array($options)) {
             $options = $this->arrayMergeRecursiveDistinct($basic_options, $options);
         } else {
-            if ($this->yaml_loaded()) {
+            if ($this->isYamlLoaded()) {
                 $this->soteria->sanitise()->disinfect($options, 'url');
                 if ($this->soteria->sanitise()->result()->isValid()) {
                     $options = $this->arrayMergeRecursiveDistinct($basic_options, yaml_parse_file($options));
@@ -108,6 +131,11 @@ abstract class AbstractCerberus
         $this->options = $options;
     }
 
+    /**
+     * @param array $merged
+     * @param array $array2
+     * @return array
+     */
     private function arrayMergeRecursiveDistinct($merged = [], $array2 = [])
     {
         if (empty($array2)) {
