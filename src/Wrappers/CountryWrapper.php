@@ -28,27 +28,39 @@ class CountryWrapper extends Wrapper
     private function detect()
     {
 
-        $sanitise = $this->soteria->sanitise(true);
 
         $params = $this->getParams();
-        if (!empty($params)) {
-            foreach ($params as $param) {
-                if ($param != '') {
-                    $data = explode(":", $param);
-                    if (strpos(strtolower($this->sanitizeReference()), strtolower($data[0])) !== false) {
+        if (empty($params)) {
+            return;
+        }
 
-                        if (isset($data[1])) {
-                            $sanitise->disinfect($data[1], 'int');
-                        }
-                        $this->score = isset($data[1]) ? (int)$sanitise->result()->getOutput() : $this->getRealScore();
-                        if ($this->score > 0) {
-                            $this->detected++;
-                        }
-                    }
+        foreach ($params as $param) {
+            if ($param != '') {
+                $data = explode(":", $param);
+                if (strpos(strtolower($this->sanitizeReference()), strtolower($data[0])) !== false) {
+                    $this->setRealScore($data[1]);
                 }
             }
         }
+    }
 
+    /**
+     * @param array $data
+     */
+    private function setRealScore($data = [])
+    {
+
+        $sanitise = $this->soteria->sanitise(true);
+        $this->score = $this->getRealScore();
+
+        if (isset($data[1])) {
+            $sanitise->disinfect($data[1], 'int');
+            $this->score = (int)$sanitise->result()->getOutput();
+        }
+
+        if ($this->score > 0) {
+            $this->detected++;
+        }
     }
 
 }
