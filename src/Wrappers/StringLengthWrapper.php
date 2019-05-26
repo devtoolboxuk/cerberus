@@ -2,10 +2,10 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class CountryWrapper extends Wrapper
+class StringLengthWrapper extends Wrapper
 {
 
-    private $detected = 0;
+    private $stringLengthExceeded = null;
     private $score = 0;
 
     public function process()
@@ -13,11 +13,12 @@ class CountryWrapper extends Wrapper
         $this->initWrapper($this->setLocalName());
         $this->detect();
 
-        if ($this->detected > 0) {
+        if ($this->stringLengthExceeded) {
             $this->setScore($this->score);
             $this->setResult();
         }
     }
+
 
     private function setLocalName()
     {
@@ -28,15 +29,18 @@ class CountryWrapper extends Wrapper
     private function detect()
     {
         $params = $this->getParams();
+
         if (empty($params)) {
             return;
         }
 
         foreach ($params as $param) {
             if ($param != '') {
-                $data = explode(":", $param);
+                $data = explode("|", $param);
                 if (strpos(strtolower($this->sanitizeReference()), strtolower($data[0])) !== false) {
-                    $this->setRealScore($data);
+
+                    $this->setReference($data[0]);
+                    $this->getStringLength($data);
                 }
             }
         }
@@ -45,12 +49,28 @@ class CountryWrapper extends Wrapper
     /**
      * @param array $data
      */
-    private function setRealScore($data = [])
+    private function getStringLength($data = [])
     {
-        $this->overRideScore($data);
+        $sanitise = $this->soteria->sanitise(true);
+        $length = 0;
 
-        if ($this->score > 0) {
-            $this->detected++;
+        if (isset($data[1])) {
+            $sanitise->disinfect($data[1], 'int');
+            $length = (int)$sanitise->result()->getOutput();
+        }
+
+        $this->checkStringLength($length);
+    }
+
+    /**
+     * @param int $length
+     */
+    private function checkStringLength($length = -1)
+    {
+        if ($length > 0) {
+            if (mb_strlen($this->getReference()) > $length) {
+                $this->stringLengthExceeded = true;
+            }
         }
     }
 

@@ -20,7 +20,8 @@
   "require": {
     "php": ">=5.4.16",
     "devtoolboxuk/soteria": "^2.1.0",
-    "mattketmo/email-checker": "~v1.5.5"
+    "devtoolboxuk/ip-address": "^1.0.1",
+    "devtoolboxuk/lists": "^1.0.0"
   },
   "minimum-stability": "dev",
   "scripts": {

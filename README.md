@@ -16,6 +16,8 @@
 
 - [Background](#Background)
 - [Usage](#Usage)
+- [Help Support This Project](#Help Support This Project)
+
 - [Maintainers](#Maintainers)
 - [License](#License)
 
@@ -45,6 +47,11 @@ $this->cerberus = new Cerberus();
 ```php
 $cerberus->setOptions($this->getOptions());
 ```
+
+## Help Support This Project
+
+[![Help Support This Project](https://github.com/devtoolboxuk/cerberus/tree/master/src/assets/buy-me-a-coffee-button.png)](https://Ko-fi.com/devtoolboxuk )
+
 
 ## Maintainers
 

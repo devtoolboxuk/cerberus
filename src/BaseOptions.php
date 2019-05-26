@@ -7,19 +7,20 @@ class BaseOptions
 
     public function getOptions()
     {
-        if ($this->isYamlLoaded()) {
-            return yaml_parse_file(__DIR__ . '/Options.yml');
-        }
-
         return [
             'Detection' => [
                 'Rules' => [
-                    'Bots' => [
+                    'BotBlock' => [
                         'active' => 1,
                         'score' => 1,
-                        'params' => 'sensu'
+                        'params' => '360Spider'
                     ],
                     'Html' => [
+                        'active' => 1,
+                        'score' => 1,
+                        'params' => '',
+                    ],
+                    'StringLength' => [
                         'active' => 1,
                         'score' => 1,
                         'params' => '',
@@ -30,6 +31,16 @@ class BaseOptions
                         'params' => '',
                     ],
                     'Url' => [
+                        'active' => 1,
+                        'score' => 1,
+                        'params' => '',
+                    ],
+                    'Ip' => [
+                        'active' => 1,
+                        'score' => 1,
+                        'params' => '',
+                    ],
+                    'Tor' => [
                         'active' => 1,
                         'score' => 1,
                         'params' => '',

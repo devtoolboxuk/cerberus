@@ -36,6 +36,17 @@ abstract class Wrapper
         return isset($this->realScore);
     }
 
+    protected function overRideScore($data)
+    {
+        $sanitise = $this->soteria->sanitise(true);
+        $this->score = $this->getRealScore();
+
+        if (isset($data[1])) {
+            $sanitise->disinfect($data[1], 'int');
+            $this->score = (int)$sanitise->result()->getOutput();
+        }
+    }
+
     public function setOptions($reference, $options = [])
     {
         $this->reference = $reference;

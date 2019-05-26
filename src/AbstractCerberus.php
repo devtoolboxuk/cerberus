@@ -29,6 +29,7 @@ abstract class AbstractCerberus
     }
 
     /**
+     * @TODO - Add pass in json file
      * @param $file
      */
     public function setOptionsWithFile($file)
