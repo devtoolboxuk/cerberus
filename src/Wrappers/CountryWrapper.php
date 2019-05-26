@@ -6,7 +6,6 @@ class CountryWrapper extends Wrapper
 {
 
     private $detected = 0;
-    private $score = 0;
 
     public function process()
     {
@@ -28,6 +27,7 @@ class CountryWrapper extends Wrapper
     private function detect()
     {
         $params = $this->getParams();
+
         if (empty($params)) {
             return;
         }

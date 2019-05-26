@@ -6,7 +6,6 @@ class StringLengthWrapper extends Wrapper
 {
 
     private $stringLengthExceeded = null;
-    private $score = 0;
 
     public function process()
     {

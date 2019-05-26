@@ -10,7 +10,7 @@ abstract class Wrapper
     protected $soteria;
     private $options = [];
     private $results = null;
-    private $score = 0;
+    protected $score = 0;
     private $realScore = 0;
     private $params = [];
     private $name;

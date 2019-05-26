@@ -6,7 +6,6 @@ class BotWrapper extends Wrapper
 {
 
     private $userAgentFound = 0;
-    private $score = 0;
 
     public function process()
     {
