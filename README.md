@@ -50,7 +50,7 @@ $cerberus->setOptions($this->getOptions());
 
 ## Help Support This Project
 
-[![Help Support This Project](https://raw.githubusercontent.com/devtoolboxuk/cerberus/master/src/assets/buy-me-a-coffee-button.png)](https://Ko-fi.com/devtoolboxuk )
+[![Help Support This Project](https://raw.githubusercontent.com/devtoolboxuk/cerberus/master/assets/buy-me-a-coffee-button.png)](https://Ko-fi.com/devtoolboxuk)
 
 ## Maintainers
 
