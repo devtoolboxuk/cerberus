@@ -50,7 +50,7 @@ class StringLengthWrapper extends Wrapper
      */
     private function getStringLength($data = [])
     {
-        $sanitise = $this->soteria->sanitise(true);
+        $sanitise = $this->soteria->sanitise();
         $length = 0;
 
         if (isset($data[1])) {

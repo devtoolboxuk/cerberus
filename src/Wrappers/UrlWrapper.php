@@ -16,7 +16,7 @@ class UrlWrapper extends Wrapper
     {
         $this->initWrapper($this->setLocalName());
 
-        $urlSanitise = $this->soteria->sanitise(true);
+        $urlSanitise = $this->soteria->sanitise();
         $urlSanitise->removeUrl($this->getReference());
 
         if (!$urlSanitise->result()->isValid()) {

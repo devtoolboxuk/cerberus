@@ -20,6 +20,11 @@ class BaseOptions
                         'score' => 1,
                         'params' => '',
                     ],
+                    'ReCaptcha' => [
+                        'active' => 1,
+                        'score' => 1,
+                        'params' => '1.0:0|0.0:100',
+                    ],
                     'StringLength' => [
                         'active' => 1,
                         'score' => 1,

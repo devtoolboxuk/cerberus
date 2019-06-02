@@ -38,7 +38,7 @@ abstract class Wrapper
 
     protected function overRideScore($data)
     {
-        $sanitise = $this->soteria->sanitise(true);
+        $sanitise = $this->soteria->sanitise();
         $this->score = $this->getRealScore();
 
         if (isset($data[1])) {

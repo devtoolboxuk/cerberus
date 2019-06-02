@@ -48,6 +48,46 @@ $this->cerberus = new Cerberus();
 $cerberus->setOptions($this->getOptions());
 ```
 
+## Example - Detection of a dodgy website registration
+Also see tests/test-registration.php
+
+```php
+function testDodgyRegistration()
+{
+
+    $cerberus = new CerberusService();
+    $cerberus->setOptions($this->getOptions());
+
+    $login_array = [
+        'email' => 'rob@shotmail.ru',
+        'name' => 'Visit my website http://www.doajob.org?redirect=https://www.google.com',
+        'address' => 'Some Street',
+        'postcode' => 'GL1 1AA',
+        'country' => 'MX',
+    ];
+
+    $detection = $cerberus
+        ->pushHandler($this->createLoginStringHandler('Name', $login_array['name']))
+        ->pushHandler($this->createLoginStringHandler('Address', $login_array['address']))
+        ->pushHandler(new EmailHandler($login_array['email']))
+        ->pushHandler(new CountryHandler($login_array['country']));
+
+    $detection->getScore(); //Returns a Score
+    $detection->getResult(); //Returns a result
+
+}
+
+private function createLoginStringHandler($name, $data)
+{
+    $handler = new DefaultHandler($name, $data);
+    $handler->pushWrapper(new HtmlWrapper());
+    $handler->pushWrapper(new UrlWrapper());
+    $handler->pushWrapper(new XssWrapper());
+    return $handler;
+}    
+
+``` 
+
 ## Help Support This Project
 
 [![Help Support This Project](https://raw.githubusercontent.com/devtoolboxuk/cerberus/master/assets/buy-me-a-coffee-button.png)](https://Ko-fi.com/devtoolboxuk)

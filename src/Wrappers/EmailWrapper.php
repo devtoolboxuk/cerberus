@@ -16,7 +16,7 @@ class EmailWrapper extends Wrapper
     {
         $this->initWrapper($this->setLocalName());
 
-        $sanitise = $this->soteria->sanitise(true);
+        $sanitise = $this->soteria->sanitise();
         $sanitise->disinfect($this->getReference(), 'email');
 
         if (!$sanitise->result()->isValid()) {
