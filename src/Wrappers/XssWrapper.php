@@ -18,8 +18,10 @@ class XssWrapper extends Wrapper
 
         $xss = $this->soteria->xss(true);
         $xss->clean($this->getReference());
+
         if (!$xss->result()->isValid()) {
             $this->setScore($this->getRealScore());
+            $this->setOutput($xss->result()->getOutput());
             $this->setResult();
         }
 

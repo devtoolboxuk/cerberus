@@ -33,26 +33,55 @@ class CerberusService extends AbstractCerberus implements CerberusInterface
         return $this;
     }
 
-    public function pushHandler($handler)
+    public function pushHandler($handler, $reference = null)
     {
+
+        $handler->setReference($reference);
         array_unshift($this->handlers, $handler);
         $this->clearResults();
         return $this;
     }
 
+    private function replaceKey($arr, $oldkey, $newkey)
+    {
+        if (array_key_exists($oldkey, $arr)) {
+            $keys = array_keys($arr);
+            $keys[array_search($oldkey, $keys)] = $newkey;
+            return array_combine($keys, $arr);
+        }
+        return $arr;
+    }
+
     /**
-     * @return array
+     * @return mixed
+     * @throws \ReflectionException
      */
     public function toArray()
     {
         return $this->process()->toArray();
     }
+    public function getJsonLogs()
+    {
+        return $this->process()->getJsonLogs();
+    }
+    public function getArrayLogs()
+    {
+        return $this->process()->getArrayLogs();
+    }
+    public function getReferences()
+    {
+        return $this->process()->getReferences();
+    }
 
+    /**
+     * @return object|null
+     * @throws \ReflectionException
+     */
     public function process()
     {
-        foreach ($this->handlers as $handler) {
-            array_unshift($this->references, ['name' => $handler->getName(), 'value' => $handler->getValue()]);
+        foreach ($this->handlers as $key => $handler) {
             $this->processWrappers($handler);
+            array_unshift($this->references, ['handler' => $handler->getName(), 'input' => $handler->getInput(), 'output' => $this->getOutput(), 'name' => $this->getHandlerName()]);
         }
 
         if (self::$instance === null) {
@@ -63,11 +92,20 @@ class CerberusService extends AbstractCerberus implements CerberusInterface
         return self::$instance;
     }
 
+    public function outputs()
+    {
+        return $this->process()->getOutputs();
+    }
+
+    public function inputs()
+    {
+        return $this->process()->getInputs();
+    }
+
     public function hasScore()
     {
         return $this->process()->hasScore();
     }
-
 
     public function getResult()
     {

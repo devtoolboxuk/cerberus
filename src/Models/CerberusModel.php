@@ -27,10 +27,29 @@ class CerberusModel
      */
     function __construct($references = [], $score = 0, $result = [])
     {
-        $this->references = $references;
+        $this->addReferences($references);
         $this->score = $score;
         $this->result = $result;
     }
+
+
+    /**
+     * @param $references
+     */
+    private function addReferences($references)
+    {
+
+        foreach ($references as $reference) {
+
+            $this->references[] = new References(
+                isset($reference['handler']) ? $reference['handler'] : null,
+                isset($reference['input']) ? $reference['input'] : null,
+                isset($reference['output']) ? $reference['output'] : null,
+                isset($reference['name']) ? $reference['name'] : null
+            );
+        }
+    }
+
 
     /**
      * @return array
@@ -39,11 +58,32 @@ class CerberusModel
     {
         return [
             'results' => [
-                "array" => $this->decodedResult(),
+                'decoded' => $this->decodedResult(),
                 'string' => $this->getResult(),
             ],
             'references' => $this->getReferences(),
             'score' => $this->getScore()
+        ];
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getJsonLogs()
+    {
+        return json_encode($this->getArrayLogs());
+    }
+
+    /**
+     * @return array
+     */
+    public function getArrayLogs()
+    {
+        return [
+            'score'=>$this->getScore(),
+            'result'=>$this->result,
+            'inputs'=>$this->getInputs(),
+            'outputs'=>$this->getOutputs(),
         ];
     }
 
@@ -77,6 +117,30 @@ class CerberusModel
     public function getScore()
     {
         return $this->score;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInputs()
+    {
+        $inputs = [];
+        foreach ($this->references as $key => $reference) {
+            $inputs[$key] = $reference->getInput();
+        }
+        return $inputs;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOutputs()
+    {
+        $outputs = [];
+        foreach ($this->references as $key => $reference) {
+            $outputs[$key] = $reference->getOutput();
+        }
+        return $outputs;
     }
 
     /**

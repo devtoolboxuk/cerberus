@@ -15,7 +15,6 @@ class WeakPasswordWrapper extends Wrapper
     public function process()
     {
         $this->initWrapper($this->setLocalName());
-
     }
 
     private function setLocalName()

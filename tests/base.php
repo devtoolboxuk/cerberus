@@ -5,6 +5,7 @@ namespace devtoolboxuk\cerberus;
 use devtoolboxuk\cerberus\Handlers\EmailHandler;
 use devtoolboxuk\cerberus\Handlers\TextHandler;
 use devtoolboxuk\cerberus\Handlers\ThrottleHandler;
+use devtoolboxuk\cerberus\Handlers\XssHandler;
 use PHPUnit\Framework\TestCase;
 
 class xDetectionTest extends TestCase
@@ -30,27 +31,43 @@ class xDetectionTest extends TestCase
         $cerberus = new CerberusService();
         $cerberus->setOptions($this->getOptions());
 
-        $data = '<span>http://dev-toolbox.co.uk';
+        $dataX = '<span>http://dev-toolbox.co.uk';
         $email_data = 'rob@shotmail.ru';
+//
+//        $detection = $cerberus
+//            ->pushHandler(new EmailHandler($email_data))
+//            ->pushHandler(new TextHandler($data));
+//
+////        print_r($detection->toArray());
+//        print_r($detection->getResult());
+//
 
-        $detection = $cerberus
-            ->pushHandler(new EmailHandler($email_data))
-            ->pushHandler(new TextHandler($data));
-
-//        print_r($detection->toArray());
-        print_r($detection->getResult());
-
-
-        echo "\n";
+//        echo "\n";
         $email_data = 'rob@hotmail.com';
+//        $detection = $cerberus
+//            ->resetHandlers()
+//            ->pushHandler(new EmailHandler($email_data))
+//            ->pushHandler(new TextHandler($data));
+//
+//        print_r($detection->toArray());
+//        print_r($detection->getResult());
+//        print_r($detection->isBlocked());
+//
+
+
+        $data = 'http://localhost/text.php/"><script>alert(“Gehackt!”);</script></form><form action="/...';
         $detection = $cerberus
             ->resetHandlers()
+            ->pushHandler(new XssHandler($data),'xss')
             ->pushHandler(new EmailHandler($email_data))
-            ->pushHandler(new TextHandler($data));
+        ;
 
-        print_r($detection->toArray());
-        print_r($detection->getResult());
-        print_r($detection->isBlocked());
+
+//        print_r($detection->getJsonLogs());
+//
+        print_r($detection->getReferences());
+//        print_r($detection->getScore());
+
         echo "\n\n";
 
     }

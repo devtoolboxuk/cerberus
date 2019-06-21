@@ -92,8 +92,4 @@ class BaseOptions
 
     }
 
-    private function isYamlLoaded()
-    {
-        return extension_loaded('yaml');
-    }
 }

@@ -14,7 +14,7 @@
 
     <testsuites>
         <testsuite name="cerberus">
-            <directory prefix="test-" suffix=".php">./tests/</directory>
+            <directory prefix="base" suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

@@ -13,19 +13,13 @@ abstract class AbstractCerberus
     protected $score = 0;
     protected $soteria;
 
+    protected $output;
+    protected $handlerName;
+
     public function __construct()
     {
         $this->soteria = new SoteriaService();
         $this->setOptions();
-    }
-
-    /**
-     * @param array $options
-     */
-    public function setOptions($options = [])
-    {
-        $baseOptions = new BaseOptions();
-        $this->options = $this->arrayMergeRecursiveDistinct($baseOptions->getOptions(), $options);
     }
 
     /**
@@ -84,9 +78,11 @@ abstract class AbstractCerberus
 
         foreach ($handler->getWrappers() as $wrapper) {
 
-            $wrapper->setOptions($handler->getValue(), $options['Rules']);
+            $wrapper->setOptions($handler->getInput(), $options['Rules']);
             $wrapper->process();
             $this->addResult($wrapper->getScore(), $wrapper->getResult());
+            $this->addOutput($wrapper->getOutput());
+            $this->addHandlerName($handler->getName());
         }
     }
 
@@ -136,6 +132,28 @@ abstract class AbstractCerberus
         return $this;
     }
 
+    protected function addOutput($value)
+    {
+        $this->output = $value;
+        return $this;
+    }
+
+    protected function getOutput()
+    {
+        return $this->output;
+    }
+
+    protected function addHandlerName($handlerName)
+    {
+        $this->handlerName = $handlerName;
+        return $this;
+    }
+
+    protected function getHandlerName()
+    {
+        return $this->handlerName;
+    }
+
     protected function clearResults()
     {
         $this->results = [];
@@ -149,6 +167,15 @@ abstract class AbstractCerberus
     protected function getOptions()
     {
         return $this->options;
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setOptions($options = [])
+    {
+        $baseOptions = new BaseOptions();
+        $this->options = $this->arrayMergeRecursiveDistinct($baseOptions->getOptions(), $options);
     }
 
 

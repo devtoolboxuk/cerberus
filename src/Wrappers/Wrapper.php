@@ -8,43 +8,32 @@ abstract class Wrapper
 {
 
     protected $soteria;
+    protected $score = 0;
     private $options = [];
     private $results = null;
-    protected $score = 0;
     private $realScore = 0;
     private $params = [];
+
     private $name;
     private $active;
     private $reference;
+
+    private $output = null;
 
     public function __construct()
     {
         $this->soteria = new SoteriaService();
     }
 
-    public function getRealScore()
+    public function getOutput()
     {
-        if (!$this->hasRealScore()) {
-            return 0;
-        }
-
-        return $this->realScore;
+        return $this->output;
     }
 
-    private function hasRealScore()
+    protected function setOutput($value)
     {
-        return isset($this->realScore);
-    }
-
-    protected function overRideScore($data)
-    {
-        $sanitise = $this->soteria->sanitise();
-        $this->score = $this->getRealScore();
-
-        if (isset($data[1])) {
-            $sanitise->disinfect($data[1], 'int');
-            $this->score = (int)$sanitise->result()->getOutput();
-        }
+        $this->output = $value;
+        return $this;
     }
 
     public function setOptions($reference, $options = [])
@@ -92,6 +81,31 @@ abstract class Wrapper
         return $this->results;
     }
 
+    protected function overRideScore($data)
+    {
+        $sanitise = $this->soteria->sanitise();
+        $this->score = $this->getRealScore();
+
+        if (isset($data[1])) {
+            $sanitise->disinfect($data[1], 'int');
+            $this->score = (int)$sanitise->result()->getOutput();
+        }
+    }
+
+    public function getRealScore()
+    {
+        if (!$this->hasRealScore()) {
+            return 0;
+        }
+
+        return $this->realScore;
+    }
+
+    private function hasRealScore()
+    {
+        return isset($this->realScore);
+    }
+
     protected function pushResult($result)
     {
         array_unshift($this->results, $result);
@@ -104,6 +118,7 @@ abstract class Wrapper
 
     protected function getReference()
     {
+        $this->setOutput($this->reference);
         return $this->reference;
     }
 
