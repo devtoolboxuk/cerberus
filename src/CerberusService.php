@@ -85,7 +85,7 @@ class CerberusService extends AbstractCerberus implements CerberusInterface
         }
 
         if (self::$instance === null) {
-            $reflection = new ReflectionClass('devtoolboxuk\\cerberus\\Models\\CerberusModel');
+            $reflection = new ReflectionClass('devtoolboxuk\\cerberus\\Models\\Cerberus');
             self::$instance = $reflection->newInstance($this->references, $this->score, $this->result);
         }
 

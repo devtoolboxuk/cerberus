@@ -2,8 +2,8 @@
 
 namespace devtoolboxuk\cerberus;
 
-use devtoolboxuk\cerberus\Handlers\CountryHandler;
-use devtoolboxuk\cerberus\Handlers\DifferentCountryHandler;
+use devtoolboxuk\cerberus\Handlers\Country;
+use devtoolboxuk\cerberus\Handlers\DifferentCountry;
 use PHPUnit\Framework\TestCase;
 
 class CountryTest extends TestCase
@@ -35,7 +35,7 @@ class CountryTest extends TestCase
         ];
 
         $detection = $cerberus
-            ->pushHandler(new DifferentCountryHandler(implode("|", $country)));
+            ->pushHandler(new DifferentCountry(implode("|", $country)));
 
         $this->assertEquals(50, $detection->getScore());
         $this->assertEquals('{"DifferentCountry":50}', $detection->getResult());
@@ -47,7 +47,7 @@ class CountryTest extends TestCase
         ];
 
         $detection = $cerberus
-            ->pushHandler(new DifferentCountryHandler(implode("|", $country)));
+            ->pushHandler(new DifferentCountry(implode("|", $country)));
 
         $this->assertEquals(0, $detection->getScore());
         $this->assertEquals('[]', $detection->getResult());
@@ -67,28 +67,28 @@ class CountryTest extends TestCase
 
         $detected_country = 'MX';
         $detection = $cerberus
-            ->pushHandler(new CountryHandler($detected_country));
+            ->pushHandler(new Country($detected_country));
 
         $this->assertEquals(12, $detection->getScore());
         $this->assertEquals('{"Country":12}', $detection->getResult());
 
         $cerberus->resetHandlers();
         $detected_country = 'US';
-        $detection = $cerberus->pushHandler(new CountryHandler($detected_country));
+        $detection = $cerberus->pushHandler(new Country($detected_country));
 
         $this->assertEquals(15, $detection->getScore());
         $this->assertEquals('{"Country":15}', $detection->getResult());
 
         $cerberus->resetHandlers();
         $detected_country = 'GB';
-        $detection = $cerberus->pushHandler(new CountryHandler($detected_country));
+        $detection = $cerberus->pushHandler(new Country($detected_country));
 
         $this->assertEquals(0, $detection->getScore());
         $this->assertEquals('[]', $detection->getResult());
 
         $cerberus->resetHandlers();
         $detected_country = 'RU';
-        $detection = $cerberus->pushHandler(new CountryHandler($detected_country));
+        $detection = $cerberus->pushHandler(new Country($detected_country));
 
         $this->assertEquals(11, $detection->getScore());
         $this->assertEquals('{"Country":11}', $detection->getResult());

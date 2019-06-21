@@ -1,0 +1,121 @@
+<?php
+
+namespace devtoolboxuk\cerberus\Handlers;
+
+use ReflectionClass;
+
+use Exception;
+
+abstract class Base
+{
+
+    private $wrappers = [];
+    private $input;
+    private $output;
+
+    private $name;
+//    private $prefixes;
+    private $score;
+
+
+    private $reference;
+
+    public function __construct($value)
+    {
+        $this->setInput($value);
+    }
+
+    public function getInput()
+    {
+        return $this->input;
+    }
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    public function setReference($reference = null)
+    {
+        $this->reference = $this->getName();
+        if ($reference) {
+            $this->reference = $reference;
+        }
+        return $this;
+    }
+
+    protected function setInput($value)
+    {
+        $this->input = $value;
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    protected function setName($value)
+    {
+        $this->name = $value;
+        return $this;
+    }
+
+
+
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+    protected function setOutput($value)
+    {
+        $this->output = $value;
+        return $this;
+    }
+
+    public function getWrappers()
+    {
+        return $this->wrappers;
+    }
+//
+//    public function isActive()
+//    {
+//        return $this->active;
+//    }
+
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+    public function setScore($score)
+    {
+        $this->score = $score;
+        return $this;
+    }
+
+    public function pushWrapper($wrapper)
+    {
+        array_unshift($this->wrappers, $wrapper);
+        return $this;
+    }
+
+
+    public function build($method, $arguments = [])
+    {
+        $className = __NAMESPACE__ . '\\' . ucfirst($method) . 'Handler';
+
+        if (class_exists($className)) {
+
+            $reflection = new ReflectionClass($className);
+
+            if (!$reflection->isInstantiable()) {
+                throw new Exception(sprintf('"%s" must be instantiable', $className));
+            }
+
+            return $reflection->newInstanceArgs($arguments);
+        }
+        throw new Exception(sprintf('"%s" is not a valid rule name', $method));
+    }
+
+}

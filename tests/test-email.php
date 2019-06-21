@@ -2,7 +2,7 @@
 
 namespace devtoolboxuk\cerberus;
 
-use devtoolboxuk\cerberus\Handlers\EmailHandler;
+use devtoolboxuk\cerberus\Handlers\Email;
 use PHPUnit\Framework\TestCase;
 
 class EmailTest extends TestCase
@@ -30,7 +30,7 @@ class EmailTest extends TestCase
 
         $email_data = 'rob@shotmail.ru';
         $detection = $cerberus
-            ->pushHandler(new EmailHandler($email_data));
+            ->pushHandler(new Email($email_data));
 
         $this->assertEquals(46, $detection->getScore());
         $this->assertEquals('{"DisposableEmail":"46"}', $detection->getResult());
@@ -50,7 +50,7 @@ class EmailTest extends TestCase
 
         $email_data = 'rob@hotmail.com';
         $detection = $cerberus
-            ->pushHandler(new EmailHandler($email_data));
+            ->pushHandler(new Email($email_data));
 
         $this->assertEquals(0, $detection->getScore());
         $this->assertEquals('[]', $detection->getResult());
