@@ -4,9 +4,8 @@ namespace devtoolboxuk\cerberus;
 
 use devtoolboxuk\cerberus\Handlers\Country;
 use devtoolboxuk\cerberus\Handlers\DefaultHandler;
-use devtoolboxuk\cerberus\Handlers\DifferentCountry;
 use devtoolboxuk\cerberus\Handlers\Email;
-use devtoolboxuk\cerberus\Wrappers\Email;
+use devtoolboxuk\cerberus\Wrappers\Email as EmailWrapper;
 use devtoolboxuk\cerberus\Wrappers\Html;
 use devtoolboxuk\cerberus\Wrappers\Url;
 use devtoolboxuk\cerberus\Wrappers\Xss;
@@ -91,9 +90,6 @@ class RegistrationTest extends TestCase
         $this->assertEquals(12, $detection->getScore());
         $this->assertEquals('{"Country":12}', $detection->getResult());
 
-//        print_r($detection->toArray());
-//        exit();
-
     }
 
     function testValidRegistration()
@@ -118,9 +114,6 @@ class RegistrationTest extends TestCase
 
         $this->assertEquals(0, $detection->getScore());
         $this->assertEquals('[]', $detection->getResult());
-
-//        print_r($detection->toArray());
-//        exit();
 
     }
 
