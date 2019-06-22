@@ -3,7 +3,6 @@
 namespace devtoolboxuk\cerberus;
 
 use devtoolboxuk\cerberus\handlers\Handler;
-use devtoolboxuk\utilitybundle\UtilityService;
 use ReflectionClass;
 
 class CerberusService extends AbstractService implements CerberusInterface
@@ -14,8 +13,6 @@ class CerberusService extends AbstractService implements CerberusInterface
 
     public function __construct()
     {
-        $this->utilityService = new UtilityService();
-        $this->arrayUtility = $this->utilityService->arrays();
         $this->resetHandlers();
     }
 

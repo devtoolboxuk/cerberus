@@ -165,7 +165,7 @@ abstract class AbstractService
     public function setOptions($options = [])
     {
         $baseOptions = new BaseOptions();
-        $this->options = $this->utilityService->arrays()->arrayMergeRecursiveDistinct($baseOptions->getOptions(), $options);
+        $this->options = $this->arrayUtility->arrayMergeRecursiveDistinct($baseOptions->getOptions(), $options);
     }
 
 
