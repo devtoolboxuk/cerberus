@@ -8,10 +8,10 @@ abstract class Base
 {
 
     protected $soteria;
-    protected $score = 0;
+    private $realScore = 0;    protected $score = 0;
     private $options = [];
     private $results = null;
-    private $realScore = 0;
+
     private $params = [];
 
     private $name;

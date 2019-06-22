@@ -4,25 +4,20 @@ namespace devtoolboxuk\cerberus\Wrappers;
 
 /**
  *
- * Detect if a URL has been passed through
+ * Checks maximum number of bytes in a cookie
  *
- * Class UrlWrapper
+ * Class CookieWrapper
  * @package devtoolboxuk\cerberus\Wrappers
  */
-class Url extends Base
+class CookieWrapper extends Base
 {
 
     public function process()
     {
         $this->initWrapper($this->setLocalName());
 
-        $urlSanitise = $this->soteria->sanitise();
-        $urlSanitise->removeUrl($this->getReference());
-
-        if (!$urlSanitise->result()->isValid()) {
-            $this->setScore($this->getRealScore());
-            $this->setResult();
-        }
+        $this->setScore($this->getRealScore());
+        $this->setResult();
 
     }
 

@@ -2,7 +2,7 @@
 
 namespace devtoolboxuk\cerberus;
 
-use devtoolboxuk\cerberus\Handlers\Xss;
+use devtoolboxuk\cerberus\Handlers\XssHandler;
 use PHPUnit\Framework\TestCase;
 
 class XssTest extends TestCase
@@ -30,7 +30,7 @@ class XssTest extends TestCase
 
         $data = '<span>http://dev-toolbox.co.uk';
         $detection = $cerberus
-            ->pushHandler(new Xss($data));
+            ->pushHandler(new XssHandler($data));
 
         $this->assertEquals(0, $detection->getScore());
         $this->assertEquals('[]', $detection->getResult());
@@ -50,7 +50,7 @@ class XssTest extends TestCase
 
         $data = 'http://localhost/text.php/"><script>alert(“Gehackt!”);</script></form><form action="/...';
         $detection = $cerberus
-            ->pushHandler(new Xss($data));
+            ->pushHandler(new XssHandler($data));
 
         $this->assertEquals(10, $detection->getScore());
         $this->assertEquals('{"Xss":10}', $detection->getResult());

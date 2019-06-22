@@ -2,14 +2,14 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class DifferentCountry extends Base
+class NumericWrapper extends Base
 {
-
+    
     public function process()
     {
         $this->initWrapper($this->setLocalName());
-        list($chosenCountry, $detectedCountry) = explode('|', $this->getReference());
-        if ($chosenCountry != $detectedCountry) {
+
+        if (is_numeric($this->getReference())) {
             $this->setScore($this->getRealScore());
             $this->setResult();
         }
@@ -20,5 +20,4 @@ class DifferentCountry extends Base
         $name = str_replace(__NAMESPACE__ . '\\', '', __CLASS__);
         return str_replace('Wrapper', '', $name);
     }
-
 }

@@ -14,7 +14,6 @@ abstract class AbstractBase
     private $output;
 
     private $handlerName;
-//    private $prefixes;
     private $score;
 
 
@@ -61,8 +60,6 @@ abstract class AbstractBase
         return $this;
     }
 
-
-
     public function getOutput()
     {
         return $this->output;
@@ -78,11 +75,6 @@ abstract class AbstractBase
     {
         return $this->wrappers;
     }
-//
-//    public function isActive()
-//    {
-//        return $this->active;
-//    }
 
     public function getScore()
     {
@@ -116,7 +108,7 @@ abstract class AbstractBase
 
             return $reflection->newInstanceArgs($arguments);
         }
-        throw new Exception(sprintf('"%s" is not a valid rule name', $method));
+        throw new Exception(sprintf('"%s" is not a valid handler', $method));
     }
 
 }

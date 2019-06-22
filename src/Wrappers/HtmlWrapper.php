@@ -2,7 +2,7 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class Html extends Base
+class HtmlWrapper extends Base
 {
 
     public function process()

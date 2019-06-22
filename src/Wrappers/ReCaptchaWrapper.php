@@ -2,7 +2,12 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class ReCaptcha extends Base
+/**
+ * @TODO
+ * Class ReCaptcha
+ * @package devtoolboxuk\cerberus\Wrappers
+ */
+class ReCaptchaWrapper extends Base
 {
 
     public function process()

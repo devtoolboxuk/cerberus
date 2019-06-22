@@ -2,23 +2,29 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class QueryStringKey extends Base
+/**
+ *
+ * Detect if XSS has been passed through
+ *
+ * Class XssWrapper
+ * @package devtoolboxuk\cerberus\Wrappers
+ */
+class XssWrapper extends Base
 {
-
-    private $queryArray = [];
 
     public function process()
     {
         $this->initWrapper($this->setLocalName());
 
-        $this->getQueryString();
+        $xss = $this->soteria->xss(true);
+        $xss->clean($this->getReference());
 
-        list($key) = array_pad(explode('|', $this->getReference()), 1, null);
-
-        if (isset($this->queryArray[$key])) {
+        if (!$xss->result()->isValid()) {
             $this->setScore($this->getRealScore());
+            $this->setOutput($xss->result()->getOutput());
             $this->setResult();
         }
+
     }
 
     private function setLocalName()
@@ -26,12 +32,4 @@ class QueryStringKey extends Base
         $name = str_replace(__NAMESPACE__ . '\\', '', __CLASS__);
         return str_replace('Wrapper', '', $name);
     }
-
-    private function getQueryString()
-    {
-        if (isset($_SERVER["QUERY_STRING"])) {
-            parse_str($_SERVER["QUERY_STRING"], $this->queryArray);
-        }
-    }
-
 }

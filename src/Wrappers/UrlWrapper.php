@@ -2,17 +2,28 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class Numeric extends Base
+/**
+ *
+ * Detect if a URL has been passed through
+ *
+ * Class UrlWrapper
+ * @package devtoolboxuk\cerberus\Wrappers
+ */
+class UrlWrapper extends Base
 {
-    
+
     public function process()
     {
         $this->initWrapper($this->setLocalName());
 
-        if (is_numeric($this->getReference())) {
+        $urlSanitise = $this->soteria->sanitise();
+        $urlSanitise->removeUrl($this->getReference());
+
+        if (!$urlSanitise->result()->isValid()) {
             $this->setScore($this->getRealScore());
             $this->setResult();
         }
+
     }
 
     private function setLocalName()

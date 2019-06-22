@@ -2,7 +2,7 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class Country extends Base
+class CountryWrapper extends Base
 {
 
     private $detected = 0;

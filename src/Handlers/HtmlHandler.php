@@ -2,14 +2,14 @@
 
 namespace devtoolboxuk\cerberus\Handlers;
 
-use devtoolboxuk\cerberus\Wrappers\Country as CountryWrapper;
+use devtoolboxuk\cerberus\Wrappers\HtmlWrapper;
 
-class Country extends Handler
+class HtmlHandler extends Handler
 {
     public function __construct($value = '')
     {
         parent::__construct($value);
         $this->setHandlerName(str_replace(__NAMESPACE__ . '\\', '', __CLASS__));
-        $this->pushWrapper(new CountryWrapper());
+        $this->pushWrapper(new HtmlWrapper());
     }
 }

@@ -2,7 +2,7 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class Tor extends Base
+class TorWrapper extends Base
 {
 
     public function process()

@@ -2,9 +2,9 @@
 
 namespace devtoolboxuk\cerberus\Handlers;
 
-use devtoolboxuk\cerberus\Wrappers\Xss as XssWrapper;
+use devtoolboxuk\cerberus\Wrappers\XssWrapper;
 
-class Xss extends Handler
+class XssHandler extends Handler
 {
     /**
      * XssHandler constructor.
@@ -15,7 +15,6 @@ class Xss extends Handler
     {
         parent::__construct($value);
         $this->setHandlerName(str_replace(__NAMESPACE__ . '\\', '', __CLASS__));
-      //  $this->setReference($keyReference);
         $this->pushWrapper(new XssWrapper());
     }
 }

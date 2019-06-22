@@ -2,10 +2,10 @@
 
 namespace devtoolboxuk\cerberus;
 
-use devtoolboxuk\cerberus\Handlers\Email;
-use devtoolboxuk\cerberus\Handlers\Text;
+use devtoolboxuk\cerberus\Handlers\EmailHandler;
+use devtoolboxuk\cerberus\Handlers\TextHandler;
 use devtoolboxuk\cerberus\Handlers\ThrottleHandler;
-use devtoolboxuk\cerberus\Handlers\Xss;
+use devtoolboxuk\cerberus\Handlers\XssHandler;
 use PHPUnit\Framework\TestCase;
 
 class xDetectionTest extends TestCase
@@ -58,8 +58,8 @@ class xDetectionTest extends TestCase
         $data = 'http://localhost/text.php/"><script>alert(“Gehackt!”);</script></form><form action="/...';
         $detection = $cerberus
             ->resetHandlers()
-            ->pushHandler(new Xss($data),'sdf')
-            ->pushHandler(new Email($email_data))
+            ->pushHandler(new XssHandler($data),'sdf')
+            ->pushHandler(new EmailHandler($email_data))
         ;
 
 

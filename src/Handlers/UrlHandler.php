@@ -2,14 +2,18 @@
 
 namespace devtoolboxuk\cerberus\Handlers;
 
-use devtoolboxuk\cerberus\Wrappers\Bots as BotsWrapper;
+use devtoolboxuk\cerberus\Wrappers\UrlWrapper;
 
-class Bots extends Handler
+/**
+ * Class Url
+ * @package devtoolboxuk\cerberus\Handlers
+ */
+class UrlHandler extends Handler
 {
     public function __construct($value = '')
     {
         parent::__construct($value);
         $this->setHandlerName(str_replace(__NAMESPACE__ . '\\', '', __CLASS__));
-        $this->pushWrapper(new BotsWrapper());
+        $this->pushWrapper(new UrlWrapper());
     }
 }

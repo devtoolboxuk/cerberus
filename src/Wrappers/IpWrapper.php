@@ -2,7 +2,7 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class Ip extends Base
+class IpWrapper extends Base
 {
 
     public function process()

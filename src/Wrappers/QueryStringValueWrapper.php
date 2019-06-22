@@ -2,7 +2,7 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class QueryStringValue extends Base
+class QueryStringValueWrapper extends Base
 {
 
     private $queryArray = [];

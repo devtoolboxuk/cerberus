@@ -4,21 +4,25 @@ namespace devtoolboxuk\cerberus\Wrappers;
 
 /**
  *
- * Checks maximum number of bytes in a cookie
+ * Detect that an email address is valid
  *
- * Class CookieWrapper
+ * Class EmailWrapper
  * @package devtoolboxuk\cerberus\Wrappers
  */
-class Cookie extends Base
+class EmailWrapper extends Base
 {
 
     public function process()
     {
         $this->initWrapper($this->setLocalName());
 
-        $this->setScore($this->getRealScore());
-        $this->setResult();
+        $sanitise = $this->soteria->sanitise();
+        $sanitise->disinfect($this->getReference(), 'email');
 
+        if (!$sanitise->result()->isValid()) {
+            $this->setScore($this->getRealScore());
+            $this->setResult();
+        }
     }
 
     private function setLocalName()
@@ -26,4 +30,5 @@ class Cookie extends Base
         $name = str_replace(__NAMESPACE__ . '\\', '', __CLASS__);
         return str_replace('Wrapper', '', $name);
     }
+
 }

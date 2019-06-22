@@ -4,7 +4,7 @@ namespace devtoolboxuk\cerberus\Wrappers;
 
 use devtoolboxuk\lists\ListService;
 
-class DisposableEmail extends Base
+class DisposableEmailWrapper extends Base
 {
 
     private $domain;

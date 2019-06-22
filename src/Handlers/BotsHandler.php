@@ -2,14 +2,14 @@
 
 namespace devtoolboxuk\cerberus\Handlers;
 
-use devtoolboxuk\cerberus\Wrappers\DifferentCountry as DifferentCountryWrapper;
+use devtoolboxuk\cerberus\Wrappers\BotsWrapper;
 
-class DifferentCountry extends Handler
+class BotsHandler extends Handler
 {
     public function __construct($value = '')
     {
         parent::__construct($value);
         $this->setHandlerName(str_replace(__NAMESPACE__ . '\\', '', __CLASS__));
-        $this->pushWrapper(new DifferentCountryWrapper());
+        $this->pushWrapper(new BotsWrapper());
     }
 }

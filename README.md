@@ -9,8 +9,9 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/devtoolboxuk/cerberus.svg?style=flat)](https://packagist.org/packages/devtoolboxuk/cerberus)
 [![License](https://img.shields.io/packagist/l/devtoolboxuk/cerberus.svg?style=flat)](https://packagist.org/packages/devtoolboxuk/cerberus)
 
-[![License](https://img.shields.io/maintenance/yes/2019.svg?style=flat)](https://github.com/DevToolBoxUk)
+[![Maintenance](https://img.shields.io/maintenance/yes/2019.svg?style=flat)](https://github.com/DevToolBoxUk)
 
+[![PHP](https://img.shields.io/packagist/php-v/devtoolboxuk/cerberus/dev-master.svg?style=plastic)](https://github.com/DevToolBoxUk)
 
 ## Table of Contents
 

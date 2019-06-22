@@ -2,29 +2,17 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-/**
- *
- * Detect if XSS has been passed through
- *
- * Class XssWrapper
- * @package devtoolboxuk\cerberus\Wrappers
- */
-class Xss extends Base
+class DifferentCountryWrapper extends Base
 {
 
     public function process()
     {
         $this->initWrapper($this->setLocalName());
-
-        $xss = $this->soteria->xss(true);
-        $xss->clean($this->getReference());
-
-        if (!$xss->result()->isValid()) {
+        list($chosenCountry, $detectedCountry) = explode('|', $this->getReference());
+        if ($chosenCountry != $detectedCountry) {
             $this->setScore($this->getRealScore());
-            $this->setOutput($xss->result()->getOutput());
             $this->setResult();
         }
-
     }
 
     private function setLocalName()
@@ -32,4 +20,5 @@ class Xss extends Base
         $name = str_replace(__NAMESPACE__ . '\\', '', __CLASS__);
         return str_replace('Wrapper', '', $name);
     }
+
 }

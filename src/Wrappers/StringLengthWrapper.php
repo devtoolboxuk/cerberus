@@ -2,7 +2,7 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class StringLength extends Base
+class StringLengthWrapper extends Base
 {
 
     private $stringLengthExceeded = null;

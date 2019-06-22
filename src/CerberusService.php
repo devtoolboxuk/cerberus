@@ -68,7 +68,7 @@ class CerberusService extends AbstractService implements CerberusInterface
      * @return object|null
      * @throws \ReflectionException
      */
-    public function process()
+    private function process()
     {
         foreach ($this->handlers as $key => $handler) {
             $this->processWrappers($handler);
@@ -87,7 +87,7 @@ class CerberusService extends AbstractService implements CerberusInterface
      * @return mixed
      * @throws \ReflectionException
      */
-    public function getJsonLogs()
+    public function getLogsAsJson()
     {
         return $this->process()->getJsonLogs();
     }
@@ -96,7 +96,7 @@ class CerberusService extends AbstractService implements CerberusInterface
      * @return mixed
      * @throws \ReflectionException
      */
-    public function getArrayLogs()
+    public function getLogsAsArray()
     {
         return $this->process()->getArrayLogs();
     }

@@ -9,7 +9,7 @@ namespace devtoolboxuk\cerberus\Wrappers;
  * Class WeakPasswordWrapper
  * @package devtoolboxuk\cerberus\Wrappers
  */
-class WeakPassword extends Base
+class WeakPasswordWrapper extends Base
 {
 
     public function process()

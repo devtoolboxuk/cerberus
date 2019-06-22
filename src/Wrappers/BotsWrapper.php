@@ -2,7 +2,7 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-class Bots extends Base
+class BotsWrapper extends Base
 {
 
     private $userAgentFound = 0;

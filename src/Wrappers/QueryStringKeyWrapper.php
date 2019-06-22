@@ -2,24 +2,20 @@
 
 namespace devtoolboxuk\cerberus\Wrappers;
 
-/**
- *
- * Detect that an email address is valid
- *
- * Class EmailWrapper
- * @package devtoolboxuk\cerberus\Wrappers
- */
-class Email extends Base
+class QueryStringKeyWrapper extends Base
 {
+
+    private $queryArray = [];
 
     public function process()
     {
         $this->initWrapper($this->setLocalName());
 
-        $sanitise = $this->soteria->sanitise();
-        $sanitise->disinfect($this->getReference(), 'email');
+        $this->getQueryString();
 
-        if (!$sanitise->result()->isValid()) {
+        list($key) = array_pad(explode('|', $this->getReference()), 1, null);
+
+        if (isset($this->queryArray[$key])) {
             $this->setScore($this->getRealScore());
             $this->setResult();
         }
@@ -29,6 +25,13 @@ class Email extends Base
     {
         $name = str_replace(__NAMESPACE__ . '\\', '', __CLASS__);
         return str_replace('Wrapper', '', $name);
+    }
+
+    private function getQueryString()
+    {
+        if (isset($_SERVER["QUERY_STRING"])) {
+            parse_str($_SERVER["QUERY_STRING"], $this->queryArray);
+        }
     }
 
 }
