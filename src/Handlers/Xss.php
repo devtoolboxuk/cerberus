@@ -4,7 +4,7 @@ namespace devtoolboxuk\cerberus\Handlers;
 
 use devtoolboxuk\cerberus\Wrappers\Xss as XssWrapper;
 
-class Xss extends Base
+class Xss extends Handler
 {
     /**
      * XssHandler constructor.

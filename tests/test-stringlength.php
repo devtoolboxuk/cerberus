@@ -23,7 +23,7 @@ class StringLength extends TestCase
         return include __DIR__ . '/options.php';
     }
 
-    function testDifferentCountry()
+    public function testDifferentCountry()
     {
         $cerberus = new CerberusService();
         $cerberus->setOptions($this->getOptions());
@@ -59,7 +59,7 @@ class StringLength extends TestCase
         return $this->options;
     }
 
-    function testCountry()
+    public function testCountry()
     {
 
         $cerberus = new CerberusService();

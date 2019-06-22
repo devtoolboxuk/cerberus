@@ -2,7 +2,7 @@
 
 namespace devtoolboxuk\cerberus\Handlers;
 
-class Simple extends Base
+class DefaultHandler extends Handler
 {
     public function __construct($type, $value = '')
     {

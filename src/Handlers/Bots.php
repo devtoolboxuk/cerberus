@@ -4,7 +4,7 @@ namespace devtoolboxuk\cerberus\Handlers;
 
 use devtoolboxuk\cerberus\Wrappers\Bots as BotsWrapper;
 
-class Bots extends Base
+class Bots extends Handler
 {
     public function __construct($value = '')
     {

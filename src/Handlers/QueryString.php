@@ -5,7 +5,7 @@ namespace devtoolboxuk\cerberus\Handlers;
 use devtoolboxuk\cerberus\Wrappers\QueryStringKey;
 use devtoolboxuk\cerberus\Wrappers\QueryStringValue;
 
-class QueryString extends Base
+class QueryString extends Handler
 {
     public function __construct($value = '')
     {

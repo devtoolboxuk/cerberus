@@ -22,7 +22,7 @@ class EmailTest extends TestCase
         return include __DIR__ . '/options.php';
     }
 
-    function testDisposableEmail()
+    public function testDisposableEmail()
     {
 
         $cerberus = new CerberusService();
@@ -42,7 +42,7 @@ class EmailTest extends TestCase
         return $this->options;
     }
 
-    function testValidEmail()
+    public function testValidEmail()
     {
 
         $cerberus = new CerberusService();

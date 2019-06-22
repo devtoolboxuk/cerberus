@@ -22,7 +22,7 @@ class XssTest extends TestCase
         return include __DIR__ . '/options.php';
     }
 
-    function testNoXss()
+    public function testNoXss()
     {
 
         $cerberus = new CerberusService();
@@ -42,7 +42,7 @@ class XssTest extends TestCase
         return $this->options;
     }
 
-    function testXss()
+    public function testXss()
     {
 
         $cerberus = new CerberusService();

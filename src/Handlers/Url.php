@@ -4,7 +4,7 @@ namespace devtoolboxuk\cerberus\Handlers;
 
 use devtoolboxuk\cerberus\Wrappers\Url as UrlWrapper;
 
-class Url extends Base
+class Url extends Handler
 {
     public function __construct($value = '')
     {

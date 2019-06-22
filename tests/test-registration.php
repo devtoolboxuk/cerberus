@@ -5,7 +5,6 @@ namespace devtoolboxuk\cerberus;
 use devtoolboxuk\cerberus\Handlers\Country;
 use devtoolboxuk\cerberus\Handlers\DefaultHandler;
 use devtoolboxuk\cerberus\Handlers\Email;
-use devtoolboxuk\cerberus\Wrappers\Email as EmailWrapper;
 use devtoolboxuk\cerberus\Wrappers\Html;
 use devtoolboxuk\cerberus\Wrappers\Url;
 use devtoolboxuk\cerberus\Wrappers\Xss;

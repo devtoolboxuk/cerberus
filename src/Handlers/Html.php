@@ -4,7 +4,7 @@ namespace devtoolboxuk\cerberus\Handlers;
 
 use devtoolboxuk\cerberus\Wrappers\Html as HtmlWrapper;
 
-class Html extends Base
+class Html extends Handler
 {
     public function __construct($value = '')
     {

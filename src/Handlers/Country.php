@@ -4,7 +4,7 @@ namespace devtoolboxuk\cerberus\Handlers;
 
 use devtoolboxuk\cerberus\Wrappers\Country as CountryWrapper;
 
-class Country extends Base
+class Country extends Handler
 {
     public function __construct($value = '')
     {

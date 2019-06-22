@@ -4,7 +4,7 @@ namespace devtoolboxuk\cerberus\Handlers;
 
 use devtoolboxuk\cerberus\Wrappers\StringLength as StringLengthWrapper;
 
-class StringLength extends Base
+class StringLength extends Handler
 {
     public function __construct($value = '')
     {

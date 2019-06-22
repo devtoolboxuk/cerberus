@@ -5,7 +5,7 @@ namespace devtoolboxuk\cerberus\Handlers;
 use devtoolboxuk\cerberus\Wrappers\DisposableEmail;
 use devtoolboxuk\cerberus\Wrappers\Email as EmailWrapper;
 
-class Email extends Base
+class Email extends Handler
 {
     public function __construct($value = '')
     {

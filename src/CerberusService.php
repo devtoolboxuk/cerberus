@@ -42,16 +42,6 @@ class CerberusService extends AbstractCerberus implements CerberusInterface
         return $this;
     }
 
-    private function replaceKey($arr, $oldkey, $newkey)
-    {
-        if (array_key_exists($oldkey, $arr)) {
-            $keys = array_keys($arr);
-            $keys[array_search($oldkey, $keys)] = $newkey;
-            return array_combine($keys, $arr);
-        }
-        return $arr;
-    }
-
     /**
      * @return mixed
      * @throws \ReflectionException

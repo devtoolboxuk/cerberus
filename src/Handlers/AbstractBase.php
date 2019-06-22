@@ -6,7 +6,7 @@ use ReflectionClass;
 
 use Exception;
 
-abstract class Base
+abstract class AbstractBase
 {
 
     private $wrappers = [];

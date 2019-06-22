@@ -4,7 +4,7 @@ namespace devtoolboxuk\cerberus\Handlers;
 
 use devtoolboxuk\cerberus\Wrappers\ReCaptcha as ReCaptchaWrapper;
 
-class ReCaptcha extends Base
+class ReCaptcha extends Handler
 {
     public function __construct($value = '')
     {
