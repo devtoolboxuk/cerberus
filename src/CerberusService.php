@@ -44,7 +44,7 @@ class CerberusService extends AbstractService implements CerberusInterface
 
     /**
      * @param $handler
-     * @param null $reference
+     * @param string|null $reference
      * @return $this
      */
     public function pushHandler($handler, $reference = null)
