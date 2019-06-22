@@ -4,7 +4,7 @@ namespace devtoolboxuk\cerberus;
 
 interface CerberusInterface
 {
-    public function pushHandler($handler);
+    public function pushHandler($handler,$reference);
 
     public function process();
 

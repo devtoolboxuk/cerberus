@@ -58,7 +58,7 @@ class xDetectionTest extends TestCase
         $data = 'http://localhost/text.php/"><script>alert(“Gehackt!”);</script></form><form action="/...';
         $detection = $cerberus
             ->resetHandlers()
-            ->pushHandler(new Xss($data),'xss')
+            ->pushHandler(new Xss($data),'sdf')
             ->pushHandler(new Email($email_data))
         ;
 

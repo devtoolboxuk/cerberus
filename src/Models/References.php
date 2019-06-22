@@ -44,7 +44,7 @@ class References
     {
         return [
             'handler' => $this->getHandler(),
-            'reference' => $this->getReference(),
+            'name' => $this->getName(),
             'input' => $this->getInput(),
             'output' => $this->getOutput()
         ];

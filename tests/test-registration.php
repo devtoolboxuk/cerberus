@@ -44,8 +44,8 @@ class RegistrationTest extends TestCase
         $detection = $cerberus
             ->pushHandler($this->createLoginStringHandler('Name', $login_array['name']))
             ->pushHandler($this->createLoginStringHandler('Address', $login_array['address']))
-            ->pushHandler(new Email($login_array['email']))
-            ->pushHandler(new Country($login_array['country']));
+            ->pushHandler(new Email($login_array['email']),'EmailAddress')
+            ->pushHandler(new Country($login_array['country']),'GeoCountry');
 
         $this->assertEquals(59, $detection->getScore());
         $this->assertEquals('{"Country":12,"DisposableEmail":"46","Url":1}', $detection->getResult());

@@ -72,7 +72,7 @@ abstract class AbstractService
             $wrapper->process();
             $this->addResult($wrapper->getScore(), $wrapper->getResult());
             $this->addOutput($wrapper->getOutput());
-            $this->addHandlerName($handler->getName());
+            $this->addHandlerName($handler->getHandlerReference());
         }
     }
 
@@ -128,15 +128,15 @@ abstract class AbstractService
         return $this;
     }
 
-    protected function getOutput()
-    {
-        return $this->output;
-    }
-
     protected function addHandlerName($handlerName)
     {
         $this->handlerName = $handlerName;
         return $this;
+    }
+
+    protected function getOutput()
+    {
+        return $this->output;
     }
 
     protected function getHandlerName()

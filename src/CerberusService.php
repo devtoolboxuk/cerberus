@@ -38,7 +38,7 @@ class CerberusService extends AbstractService implements CerberusInterface
     {
         $handlers = new Handler($arguments);
         $handler = $handlers->build($method, $arguments);
-        $this->pushHandler($handler);
+        $this->pushHandler($handler, null);
         return $this;
     }
 
@@ -49,7 +49,7 @@ class CerberusService extends AbstractService implements CerberusInterface
      */
     public function pushHandler($handler, $reference = null)
     {
-        $handler->setReference($reference);
+        $handler->setHandlerReference($reference);
         array_unshift($this->handlers, $handler);
         $this->clearResults();
         return $this;
@@ -62,6 +62,25 @@ class CerberusService extends AbstractService implements CerberusInterface
     public function toArray()
     {
         return $this->process()->toArray();
+    }
+
+    /**
+     * @return object|null
+     * @throws \ReflectionException
+     */
+    public function process()
+    {
+        foreach ($this->handlers as $key => $handler) {
+            $this->processWrappers($handler);
+            array_unshift($this->references, ['handler' => $handler->getHandlerName(), 'input' => $handler->getInput(), 'output' => $this->getOutput(), 'name' => $this->getHandlerName()]);
+        }
+
+        if (self::$instance === null) {
+            $reflection = new ReflectionClass('devtoolboxuk\\cerberus\\Models\\Cerberus');
+            self::$instance = $reflection->newInstance($this->references, $this->score, $this->result);
+        }
+
+        return self::$instance;
     }
 
     /**
@@ -89,25 +108,6 @@ class CerberusService extends AbstractService implements CerberusInterface
     public function getReferences()
     {
         return $this->process()->getReferences();
-    }
-
-    /**
-     * @return object|null
-     * @throws \ReflectionException
-     */
-    public function process()
-    {
-        foreach ($this->handlers as $key => $handler) {
-            $this->processWrappers($handler);
-            array_unshift($this->references, ['handler' => $handler->getName(), 'input' => $handler->getInput(), 'output' => $this->getOutput(), 'name' => $this->getHandlerName()]);
-        }
-
-        if (self::$instance === null) {
-            $reflection = new ReflectionClass('devtoolboxuk\\cerberus\\Models\\Cerberus');
-            self::$instance = $reflection->newInstance($this->references, $this->score, $this->result);
-        }
-
-        return self::$instance;
     }
 
     /**

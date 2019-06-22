@@ -13,12 +13,12 @@ abstract class AbstractBase
     private $input;
     private $output;
 
-    private $name;
+    private $handlerName;
 //    private $prefixes;
     private $score;
 
 
-    private $reference;
+    private $handlerReference;
 
     public function __construct($value)
     {
@@ -29,16 +29,17 @@ abstract class AbstractBase
     {
         return $this->input;
     }
-    public function getReference()
+
+    public function getHandlerReference()
     {
-        return $this->reference;
+        return $this->handlerReference;
     }
 
-    public function setReference($reference = null)
+    public function setHandlerReference($reference = null)
     {
-        $this->reference = $this->getName();
+        $this->handlerReference = $this->getHandlerName();
         if ($reference) {
-            $this->reference = $reference;
+            $this->handlerReference = $reference;
         }
         return $this;
     }
@@ -49,14 +50,14 @@ abstract class AbstractBase
         return $this;
     }
 
-    public function getName()
+    public function getHandlerName()
     {
-        return $this->name;
+        return $this->handlerName;
     }
 
-    protected function setName($value)
+    protected function setHandlerName($value)
     {
-        $this->name = $value;
+        $this->handlerName = $value;
         return $this;
     }
 

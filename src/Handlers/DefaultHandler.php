@@ -7,6 +7,6 @@ class DefaultHandler extends Handler
     public function __construct($type, $value = '')
     {
         parent::__construct($value);
-        $this->setName($type);
+        $this->setHandlerName($type);
     }
 }
