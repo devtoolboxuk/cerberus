@@ -3,8 +3,9 @@
 namespace devtoolboxuk\cerberus;
 
 use devtoolboxuk\soteria\SoteriaService;
+use devtoolboxuk\utilitybundle\UtilityService;
 
-abstract class AbstractCerberus
+abstract class AbstractService
 {
 
     protected $options = [];
@@ -16,10 +17,20 @@ abstract class AbstractCerberus
     protected $output;
     protected $handlerName;
 
+
+    protected $arrayUtility;
+
     public function __construct()
     {
-        $this->soteria = new SoteriaService();
+        $this->initiateServices();
         $this->setOptions();
+    }
+
+    protected function initiateServices()
+    {
+        $this->soteria = new SoteriaService();
+        $utilityService = new UtilityService();
+        $this->arrayUtility = $utilityService->arrays();
     }
 
     /**
@@ -31,10 +42,10 @@ abstract class AbstractCerberus
         if ($this->isYamlLoaded()) {
             $this->soteria->sanitise()->disinfect($file, 'url');
             if ($this->soteria->sanitise()->result()->isValid()) {
-                $this->options = $this->arrayMergeRecursiveDistinct($this->options, yaml_parse_file($file));
+                $this->options = $this->arrayUtility->arrayMergeRecursiveDistinct($this->options, yaml_parse_file($file));
             } else {
                 if (file_exists($file)) {
-                    $this->options = $this->arrayMergeRecursiveDistinct($this->options, yaml_parse_file($file));
+                    $this->options = $this->arrayUtility->arrayMergeRecursiveDistinct($this->options, yaml_parse_file($file));
                 }
             }
         }
@@ -46,27 +57,6 @@ abstract class AbstractCerberus
     private function isYamlLoaded()
     {
         return extension_loaded('yaml');
-    }
-
-    /**
-     * @param array $merged
-     * @param array $array2
-     * @return array
-     */
-    private function arrayMergeRecursiveDistinct($merged = [], $array2 = [])
-    {
-        if (empty($array2)) {
-            return $merged;
-        }
-
-        foreach ($array2 as $key => &$value) {
-            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = $this->arrayMergeRecursiveDistinct($merged[$key], $value);
-            } else {
-                $merged[$key] = $value;
-            }
-        }
-        return $merged;
     }
 
     /**
@@ -175,7 +165,7 @@ abstract class AbstractCerberus
     public function setOptions($options = [])
     {
         $baseOptions = new BaseOptions();
-        $this->options = $this->arrayMergeRecursiveDistinct($baseOptions->getOptions(), $options);
+        $this->options = $this->utilityService->arrays()->arrayMergeRecursiveDistinct($baseOptions->getOptions(), $options);
     }
 
 

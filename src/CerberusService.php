@@ -3,9 +3,10 @@
 namespace devtoolboxuk\cerberus;
 
 use devtoolboxuk\cerberus\handlers\Handler;
+use devtoolboxuk\utilitybundle\UtilityService;
 use ReflectionClass;
 
-class CerberusService extends AbstractCerberus implements CerberusInterface
+class CerberusService extends AbstractService implements CerberusInterface
 {
     private static $instance = null;
     protected $handlers = [];
@@ -13,18 +14,29 @@ class CerberusService extends AbstractCerberus implements CerberusInterface
 
     public function __construct()
     {
+        $this->utilityService = new UtilityService();
+        $this->arrayUtility = $this->utilityService->arrays();
         $this->resetHandlers();
     }
 
-
+    /**
+     * @return $this
+     */
     public function resetHandlers()
     {
         $this->references = [];
         $this->handlers = [];
         self::$instance = null;
+        $this->initiateServices();
         return $this;
     }
 
+    /**
+     * @param $method
+     * @param array $arguments
+     * @return $this
+     * @throws \Exception
+     */
     public function __call($method, $arguments = [])
     {
         $handlers = new Handler($arguments);
@@ -33,9 +45,13 @@ class CerberusService extends AbstractCerberus implements CerberusInterface
         return $this;
     }
 
+    /**
+     * @param $handler
+     * @param null $reference
+     * @return $this
+     */
     public function pushHandler($handler, $reference = null)
     {
-
         $handler->setReference($reference);
         array_unshift($this->handlers, $handler);
         $this->clearResults();
@@ -50,14 +66,29 @@ class CerberusService extends AbstractCerberus implements CerberusInterface
     {
         return $this->process()->toArray();
     }
+
+    /**
+     * @return mixed
+     * @throws \ReflectionException
+     */
     public function getJsonLogs()
     {
         return $this->process()->getJsonLogs();
     }
+
+    /**
+     * @return mixed
+     * @throws \ReflectionException
+     */
     public function getArrayLogs()
     {
         return $this->process()->getArrayLogs();
     }
+
+    /**
+     * @return mixed
+     * @throws \ReflectionException
+     */
     public function getReferences()
     {
         return $this->process()->getReferences();
@@ -82,26 +113,46 @@ class CerberusService extends AbstractCerberus implements CerberusInterface
         return self::$instance;
     }
 
+    /**
+     * @return mixed
+     * @throws \ReflectionException
+     */
     public function outputs()
     {
         return $this->process()->getOutputs();
     }
 
+    /**
+     * @return mixed
+     * @throws \ReflectionException
+     */
     public function inputs()
     {
         return $this->process()->getInputs();
     }
 
+    /**
+     * @return mixed
+     * @throws \ReflectionException
+     */
     public function hasScore()
     {
         return $this->process()->hasScore();
     }
 
+    /**
+     * @return mixed
+     * @throws \ReflectionException
+     */
     public function getResult()
     {
         return $this->process()->getResult();
     }
 
+    /**
+     * @return mixed
+     * @throws \ReflectionException
+     */
     public function getScore()
     {
         return $this->process()->getScore();
