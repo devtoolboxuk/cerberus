@@ -9,7 +9,6 @@ class EmailNameWrapper extends Base
     {
         $this->initWrapper($this->setLocalName());
 
-
         list($name, $email) = explode('|', $this->getReference());
 
         $name = trim($name);
@@ -18,11 +17,10 @@ class EmailNameWrapper extends Base
         $sanitise->disinfect($email, 'email');
 
         if ($sanitise->result()->isValid()) {
-            $email = explode("@",$sanitise->result()->getOutput());
-            $email_characters = ['.','+','-','_'];
-            $emailName = str_replace($email_characters,' ',strtolower($email[0]));
+            $email = explode("@", $sanitise->result()->getOutput());
+            $email_characters = ['.', '+', '-', '_'];
+            $emailName = str_replace($email_characters, ' ', strtolower($email[0]));
         }
-
 
         $sanitise = $this->soteria->sanitise();
         $sanitise->disinfect($name);
@@ -45,5 +43,4 @@ class EmailNameWrapper extends Base
         $name = str_replace(__NAMESPACE__ . '\\', '', __CLASS__);
         return str_replace('Wrapper', '', $name);
     }
-
 }

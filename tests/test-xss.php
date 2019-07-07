@@ -33,7 +33,7 @@ class XssTest extends TestCase
             ->pushHandler(new XssHandler($data));
 
         $this->assertEquals(0, $detection->getScore());
-        $this->assertEquals('[]', $detection->getResult());
+        $this->assertEquals('{"Xss":0}', $detection->getResult());
 
     }
 
