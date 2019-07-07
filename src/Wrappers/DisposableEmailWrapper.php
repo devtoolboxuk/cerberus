@@ -35,7 +35,7 @@ class DisposableEmailWrapper extends Base
 
         if ($listService->findInArray('throwawaydomains', $this->domain)) {
             $this->setScore($this->getRealScore());
-            $this->setResult();
         }
+        $this->setResult();
     }
 }

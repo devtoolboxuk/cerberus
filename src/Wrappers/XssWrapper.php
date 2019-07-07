@@ -22,9 +22,9 @@ class XssWrapper extends Base
         if (!$xss->result()->isValid()) {
             $this->setScore($this->getRealScore());
             $this->setOutput($xss->result()->getOutput());
-            $this->setResult();
-        }
 
+        }
+        $this->setResult();
     }
 
     private function setLocalName()

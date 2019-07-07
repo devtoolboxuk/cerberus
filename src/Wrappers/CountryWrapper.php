@@ -5,17 +5,13 @@ namespace devtoolboxuk\cerberus\Wrappers;
 class CountryWrapper extends Base
 {
 
-    private $detected = 0;
-
     public function process()
     {
         $this->initWrapper($this->setLocalName());
         $this->detect();
 
-        if ($this->detected > 0) {
-            $this->setScore($this->score);
-            $this->setResult();
-        }
+        $this->setScore($this->getScore());
+        $this->setResult();
     }
 
     private function setLocalName()
@@ -36,22 +32,11 @@ class CountryWrapper extends Base
             if ($param != '') {
                 $data = explode(":", $param);
                 if (strpos(strtolower($this->sanitizeReference()), strtolower($data[0])) !== false) {
-                    $this->setRealScore($data);
+                    $this->overRideScore($data);
                 }
             }
         }
     }
 
-    /**
-     * @param array $data
-     */
-    private function setRealScore($data = [])
-    {
-        $this->overRideScore($data);
-
-        if ($this->score > 0) {
-            $this->detected++;
-        }
-    }
 
 }

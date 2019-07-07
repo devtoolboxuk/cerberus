@@ -50,7 +50,7 @@ class CountryTest extends TestCase
             ->pushHandler(new DifferentCountryHandler(implode("|", $country)));
 
         $this->assertEquals(0, $detection->getScore());
-        $this->assertEquals('[]', $detection->getResult());
+        $this->assertEquals('{"DifferentCountry":0}', $detection->getResult());
 
     }
 
@@ -83,8 +83,8 @@ class CountryTest extends TestCase
         $detected_country = 'GB';
         $detection = $cerberus->pushHandler(new CountryHandler($detected_country));
 
-        $this->assertEquals(0, $detection->getScore());
-        $this->assertEquals('[]', $detection->getResult());
+        $this->assertEquals(-100, $detection->getScore());
+        $this->assertEquals('{"Country":-100}', $detection->getResult());
 
         $cerberus->resetHandlers();
         $detected_country = 'RU';
@@ -92,6 +92,12 @@ class CountryTest extends TestCase
 
         $this->assertEquals(11, $detection->getScore());
         $this->assertEquals('{"Country":11}', $detection->getResult());
+        $cerberus->resetHandlers();
+        $detected_country = 'SG';
+        $detection = $cerberus->pushHandler(new CountryHandler($detected_country));
+
+        $this->assertEquals(0, $detection->getScore());
+        $this->assertEquals('{"Country":0}', $detection->getResult());
 
     }
 

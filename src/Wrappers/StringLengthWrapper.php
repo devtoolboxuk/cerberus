@@ -14,8 +14,9 @@ class StringLengthWrapper extends Base
 
         if ($this->stringLengthExceeded) {
             $this->setScore($this->score);
-            $this->setResult();
+
         }
+        $this->setResult();
     }
 
 

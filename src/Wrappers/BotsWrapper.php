@@ -16,8 +16,8 @@ class BotsWrapper extends Base
 
         if ($this->userAgentFound > 0) {
             $this->setScore($this->score);
-            $this->setResult();
         }
+        $this->setResult();
     }
 
     private function setLocalName()

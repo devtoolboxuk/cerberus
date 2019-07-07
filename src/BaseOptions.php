@@ -50,6 +50,14 @@ class BaseOptions
                         'score' => 1,
                         'params' => '',
                     ],
+                    'EmailName' => [
+                        'active' => 0,
+                        'score' => [
+                            'fail' => 0,
+                            'pass' => 0
+                        ],
+                        'params' => ''
+                    ],
                     'DisposableEmail' => [
                         'active' => 1,
                         'score' => 10,

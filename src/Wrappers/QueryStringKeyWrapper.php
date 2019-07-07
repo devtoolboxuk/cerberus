@@ -17,8 +17,8 @@ class QueryStringKeyWrapper extends Base
 
         if (isset($this->queryArray[$key])) {
             $this->setScore($this->getRealScore());
-            $this->setResult();
         }
+        $this->setResult();
     }
 
     private function setLocalName()

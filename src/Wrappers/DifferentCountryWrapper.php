@@ -9,8 +9,12 @@ class DifferentCountryWrapper extends Base
     {
         $this->initWrapper($this->setLocalName());
         list($chosenCountry, $detectedCountry) = explode('|', $this->getReference());
+
         if ($chosenCountry != $detectedCountry) {
-            $this->setScore($this->getRealScore());
+            $this->setScore($this->getFailScore());
+            $this->setResult();
+        } else {
+            $this->setScore($this->getScore());
             $this->setResult();
         }
     }

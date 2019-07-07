@@ -11,8 +11,8 @@ class HtmlWrapper extends Base
 
         if (preg_match("/<\/?\w+((\s+\w+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)\/?>/", $this->getReference())) {
             $this->setScore($this->getRealScore());
-            $this->setResult();
         }
+        $this->setResult();
     }
 
     private function setLocalName()

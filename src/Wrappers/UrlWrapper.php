@@ -21,9 +21,9 @@ class UrlWrapper extends Base
 
         if (!$urlSanitise->result()->isValid()) {
             $this->setScore($this->getRealScore());
-            $this->setResult();
-        }
 
+        }
+        $this->setResult();
     }
 
     private function setLocalName()

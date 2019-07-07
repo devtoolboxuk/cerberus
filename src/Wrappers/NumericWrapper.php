@@ -9,10 +9,10 @@ class NumericWrapper extends Base
     {
         $this->initWrapper($this->setLocalName());
 
-        if (is_numeric($this->getReference())) {
-            $this->setScore($this->getRealScore());
-            $this->setResult();
+        if (!is_numeric($this->getReference())) {
+            $this->setScore($this->getFailScore());
         }
+        $this->setResult();
     }
 
     private function setLocalName()

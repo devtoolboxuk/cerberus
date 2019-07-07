@@ -21,8 +21,9 @@ class EmailWrapper extends Base
 
         if (!$sanitise->result()->isValid()) {
             $this->setScore($this->getRealScore());
-            $this->setResult();
+
         }
+        $this->setResult();
     }
 
     private function setLocalName()

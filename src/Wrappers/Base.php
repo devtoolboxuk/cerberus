@@ -7,8 +7,13 @@ use devtoolboxuk\soteria\SoteriaService;
 abstract class Base
 {
 
+
     protected $soteria;
-    private $realScore = 0;    protected $score = 0;
+    protected $score = 0;
+    private $passScore = 0;
+    private $failScore = 0;
+
+    private $realScore = 0;
     private $options = [];
     private $results = null;
 
@@ -87,9 +92,26 @@ abstract class Base
         $this->score = $this->getRealScore();
 
         if (isset($data[1])) {
-            $sanitise->disinfect($data[1], 'int');
-            $this->score = (int)$sanitise->result()->getOutput();
+
+            $scoreData = explode(",", $data[1]);
+
+            if (count($scoreData) == 2) {
+                $sanitise->disinfect($scoreData[0], 'int');
+                $this->score = (int)$sanitise->result()->getOutput();
+                $sanitise->disinfect($scoreData[1], 'int');
+                $this->passScore = (int)$sanitise->result()->getOutput();
+            } else {
+                $sanitise->disinfect($scoreData[0], 'int');
+                $this->score = (int)$sanitise->result()->getOutput();
+            }
         }
+        $this->failScore = $this->score;
+        $this->score += (-1 * abs($this->passScore));
+    }
+
+    public function getFailScore()
+    {
+        return $this->failScore;
     }
 
     public function getRealScore()
@@ -170,7 +192,16 @@ abstract class Base
 
     private function setRealScore($score)
     {
-        $this->realScore = $score;
+
+        if (is_array($score)) {
+            $this->realScore = (int)$score['fail'];
+            $this->passScore = (int)$score['pass'];
+        } else {
+            $this->realScore = (int)$score;
+        }
+        $this->failScore = $this->realScore;
+        $this->realScore += (-1 * abs($this->passScore));
+
     }
 
     private function setActive($active)
@@ -205,7 +236,7 @@ abstract class Base
 
     protected function setScore($score)
     {
-        $this->score = $score;
+        $this->score = (int)$score;
     }
 
     private function hasScore()

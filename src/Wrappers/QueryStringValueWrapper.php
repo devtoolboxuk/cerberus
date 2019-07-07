@@ -18,9 +18,10 @@ class QueryStringValueWrapper extends Base
         if (isset($this->queryArray[$key])) {
             if ($this->queryArray[$key] == $value) {
                 $this->setScore($this->getRealScore());
-                $this->setResult();
+
             }
         }
+        $this->setResult();
     }
 
     private function setLocalName()
