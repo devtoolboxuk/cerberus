@@ -9,7 +9,7 @@ namespace devtoolboxuk\cerberus\Wrappers;
  * Class EmailWrapper
  * @package devtoolboxuk\cerberus\Wrappers
  */
-class EmailWrapper extends Base
+class InvalidEmailWrapper extends Base
 {
 
     public function process()
@@ -17,12 +17,15 @@ class EmailWrapper extends Base
         $this->initWrapper($this->setLocalName());
 
         $sanitise = $this->soteria->sanitise();
+
         $sanitise->disinfect($this->getReference(), 'email');
+
+        $this->setOutput($sanitise->result()->getOutput());
 
         if (!$sanitise->result()->isValid()) {
             $this->setScore($this->getRealScore());
-
         }
+
         $this->setResult();
     }
 

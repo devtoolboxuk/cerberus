@@ -24,7 +24,13 @@
 
 ## Background
 
-Detects if various threats are placed against the system. A score is then given to each threat. You can then decide what you want to action based on that score
+Detects if various threats are placed against the system. A score is then given to each threat. You can then decide what you want to action based on that score.
+
+## Features
+
+- Detects if any threats are in the string.
+- Gives a score to any threats found.
+- Cleans the string of any threats.
 
 ## Usage
 
@@ -68,12 +74,14 @@ function testDodgyRegistration()
     ];
 
     $detection = $cerberus
+        ->resetHandlers()
         ->pushHandler($this->createLoginStringHandler('Name', $login_array['name']))
         ->pushHandler($this->createLoginStringHandler('Address', $login_array['address']))
         ->pushHandler(new EmailHandler($login_array['email']))
         ->pushHandler(new CountryHandler($login_array['country']));
 
     $detection->getScore(); //Returns a Score
+    $detection->getOutputByName('Name'); //Returns the cleaned sanitised output of Name;
     $detection->getResult(); //Returns a result
 
 }
@@ -88,6 +96,31 @@ private function createLoginStringHandler($name, $data)
 }    
 
 ``` 
+
+### Get References
+
+## Get Input for each reference
+```php
+foreach ($detection->getReferences() as $reference)
+{
+    $reference->getInput();
+}
+```
+
+## Get Output for each reference
+```php
+foreach ($detection->getReferences() as $reference)
+{
+    $reference->getOutPut();
+}
+```
+
+## Get Output by name assigned 
+- If a name is not assigned, you wont be able to look it up... duh
+```php
+$detection->getOutputByName('Name');
+# eg: 'Visit my website'
+```
 
 ## Help Support This Project
 

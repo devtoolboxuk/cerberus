@@ -68,10 +68,12 @@ abstract class AbstractService
 
         foreach ($handler->getWrappers() as $wrapper) {
 
-            $wrapper->setOptions($handler->getInput(), $options['Rules']);
+            $wrapper->setOptions($handler->getInternalInput(), $options['Rules']);
             $wrapper->process();
             $this->addResult($wrapper->getScore(), $wrapper->getResult());
             $this->addOutput($wrapper->getOutput());
+            $handler->setInternalInput($wrapper->getOutput());
+
             $this->addHandlerName($handler->getHandlerReference());
         }
     }

@@ -11,6 +11,7 @@ abstract class AbstractBase
 
     private $wrappers = [];
     private $input;
+    private $internalInput;
     private $output;
 
     private $handlerName;
@@ -22,11 +23,20 @@ abstract class AbstractBase
     public function __construct($value)
     {
         $this->setInput($value);
+        $this->setInternalInput($value);
     }
 
     public function getInput()
     {
         return $this->input;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInternalInput()
+    {
+        return $this->internalInput;
     }
 
     public function getHandlerReference()
@@ -43,9 +53,15 @@ abstract class AbstractBase
         return $this;
     }
 
-    protected function setInput($value)
+    public function setInput($value)
     {
         $this->input = $value;
+        return $this;
+    }
+
+    public function setInternalInput($value)
+    {
+        $this->internalInput = $value;
         return $this;
     }
 

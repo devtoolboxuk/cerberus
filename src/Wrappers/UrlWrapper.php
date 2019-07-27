@@ -19,6 +19,8 @@ class UrlWrapper extends Base
         $urlSanitise = $this->soteria->sanitise();
         $urlSanitise->removeUrl($this->getReference());
 
+        $this->setOutput($urlSanitise->result()->getOutput());
+
         if (!$urlSanitise->result()->isValid()) {
             $this->setScore($this->getRealScore());
 

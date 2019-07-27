@@ -49,6 +49,7 @@ class CerberusService extends AbstractService implements CerberusInterface
      */
     public function pushHandler($handler, $reference = null)
     {
+
         $handler->setHandlerReference($reference);
         array_unshift($this->handlers, $handler);
         $this->clearResults();
@@ -108,6 +109,46 @@ class CerberusService extends AbstractService implements CerberusInterface
     public function getReferences()
     {
         return $this->process()->getReferences();
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    public function getOutputByName($name)
+    {
+        foreach ($this->getReferences() as $reference)
+        {
+            if ($name == $reference->getName()) {
+                return $reference->getOutPut();
+            }
+        }
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    public function getInputByName($name)
+    {
+        foreach ($this->getReferences() as $reference)
+        {
+            if ($name == $reference->getName()) {
+                return $reference->getInput();
+            }
+        }
+    }
+
+    /**
+     * Alias of getReferences
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    public function references()
+    {
+        return $this->getReferences();
     }
 
     /**

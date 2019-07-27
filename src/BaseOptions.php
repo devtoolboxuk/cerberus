@@ -65,7 +65,7 @@ class BaseOptions
                     ],
                     'InvalidEmail' => [
                         'active' => 1,
-                        'score' => 1,
+                        'score' => 100,
                         'params' => '',
                     ],
                     'QueryStringKey' => [

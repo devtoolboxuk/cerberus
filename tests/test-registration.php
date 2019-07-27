@@ -42,11 +42,16 @@ class RegistrationTest extends TestCase
         ];
 
         $detection = $cerberus
+            ->resetHandlers()
             ->pushHandler($this->createLoginStringHandler('Name', $login_array['name']))
             ->pushHandler($this->createLoginStringHandler('Address', $login_array['address']))
             ->pushHandler(new EmailHandler($login_array['email']), 'EmailAddress')
             ->pushHandler(new CountryHandler($login_array['country']), 'GeoCountry');
 
+        $this->assertEquals('Some Street', $detection->getOutputByName('Address'));
+        $this->assertEquals('Visit my website', $detection->getOutputByName('Name'));
+        $this->assertEquals('rob@shotmail.ru', $detection->getOutputByName('EmailAddress'));
+        $this->assertEquals('MX', $detection->getOutputByName('GeoCountry'));
         $this->assertEquals(59, $detection->getScore());
         $this->assertEquals('{"Country":12,"DisposableEmail":46,"Xss":0,"Url":1,"Html":0}', $detection->getResult());
 
@@ -115,6 +120,4 @@ class RegistrationTest extends TestCase
         $this->assertEquals('{"Country":-100,"DisposableEmail":0,"Xss":0,"Url":0,"Html":0}', $detection->getResult());
 
     }
-
-
 }
