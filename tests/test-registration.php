@@ -53,7 +53,7 @@ class RegistrationTest extends TestCase
         $this->assertEquals('rob@shotmail.ru', $detection->getOutputByName('EmailAddress'));
         $this->assertEquals('MX', $detection->getOutputByName('GeoCountry'));
         $this->assertEquals(59, $detection->getScore());
-        $this->assertEquals('{"Country":12,"DisposableEmail":46,"Xss":0,"Url":1,"Html":0}', $detection->getResult());
+        $this->assertEquals('{"Country":12,"InvalidEmail":0,"DisposableEmail":46,"Xss":0,"Url":1,"Html":0}', $detection->getResult());
 
     }
 
@@ -92,7 +92,7 @@ class RegistrationTest extends TestCase
             ->pushHandler(new CountryHandler($login_array['country']));
 
         $this->assertEquals(12, $detection->getScore());
-        $this->assertEquals('{"Country":12,"DisposableEmail":0,"Xss":0,"Url":0,"Html":0}', $detection->getResult());
+        $this->assertEquals('{"Country":12,"InvalidEmail":0,"DisposableEmail":0,"Xss":0,"Url":0,"Html":0}', $detection->getResult());
 
     }
 
@@ -117,7 +117,7 @@ class RegistrationTest extends TestCase
             ->pushHandler(new CountryHandler($login_array['country']));
 
         $this->assertEquals(-100, $detection->getScore());
-        $this->assertEquals('{"Country":-100,"DisposableEmail":0,"Xss":0,"Url":0,"Html":0}', $detection->getResult());
+        $this->assertEquals('{"Country":-100,"InvalidEmail":0,"DisposableEmail":0,"Xss":0,"Url":0,"Html":0}', $detection->getResult());
 
     }
 }
